@@ -1,0 +1,564 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 84% 4.9%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 94.1%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Medical HUD Styles */
+.medical-bg {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+}
+
+.hud-element {
+  background: rgba(0, 188, 255, 0.1);
+  border: 1px solid rgba(0, 188, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* Safari/WebKit support */
+  /* Fallback for browsers that don't support backdrop-filter */
+  @supports not (backdrop-filter: blur(10px)) {
+    background: rgba(10, 25, 47, 0.9);
+  }
+}
+
+.hud-text {
+  color: #00bcff;
+  text-shadow: 0 0 10px rgba(0, 188, 255, 0.5);
+}
+
+.medical-glow {
+  box-shadow: 0 0 20px rgba(0, 188, 255, 0.3);
+}
+
+.pulse-animation {
+  animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(0, 188, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(0, 188, 255, 0.8);
+  }
+}
+
+.scan-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.scan-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 188, 255, 0.4), transparent);
+  animation: scan 3s infinite;
+}
+
+@keyframes scan {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+.floating {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+/* Video styles */
+.hero-video {
+  object-fit: cover;
+  transform: scale(1.1);
+}
+
+/* Prose styles for blog and news articles */
+.prose-invert {
+  color: #e5e7eb;
+}
+
+.prose-invert h3 {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.prose-invert h4 {
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-invert p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.prose-invert ul {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.prose-invert ul li {
+  margin-bottom: 0.5rem;
+  list-style-type: disc;
+  color: #d1d5db;
+}
+
+.prose-invert ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.prose-invert ol li {
+  margin-bottom: 0.5rem;
+  color: #d1d5db;
+}
+
+.prose-invert strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.prose-invert a {
+  color: #60a5fa;
+  text-decoration: underline;
+}
+
+.prose-invert a:hover {
+  color: #93c5fd;
+}
+
+.prose-invert blockquote {
+  border-left: 4px solid #60a5fa;
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #d1d5db;
+}
+
+.prose-invert code {
+  background-color: #374151;
+  color: #e5e7eb;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Устранение горизонтального overscroll/bounce эффекта на мобильных */
+html, body {
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100vw;
+  width: 100%;
+}
+
+* {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Дополнительная фиксация для iOS */
+body {
+  position: relative;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+/* Исключаем любые элементы превышающие ширину экрана */
+main, section, div, header, footer {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Фиксация для контейнеров */
+.container {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Специальная обработка для iOS Safari */
+@supports (-webkit-touch-callout: none) {
+  body {
+    overscroll-behavior-x: none;
+    overflow-x: hidden;
+  }
+}
+
+/* Samsung Browser & Mobile Compatibility Fixes */
+/* Line clamp fallback for browsers that don't support it */
+.line-clamp-fallback {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--line-clamp, 3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* Fallback for very old browsers */
+  max-height: calc(var(--line-clamp, 3) * 1.5em);
+  line-height: 1.5;
+}
+
+/* Specific line clamp fallbacks */
+.line-clamp-2-fallback {
+  --line-clamp: 2;
+  max-height: 3em; /* 2 lines * 1.5 line-height */
+}
+
+.line-clamp-3-fallback {
+  --line-clamp: 3;
+  max-height: 4.5em; /* 3 lines * 1.5 line-height */
+}
+
+/* Card text overflow fixes */
+.card-title-safe {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+  max-height: 2.8em;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.card-excerpt-safe {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5;
+  max-height: 4.5em;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Mobile-first responsive grid fixes */
+@media (max-width: 768px) {
+  .mobile-card-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  .mobile-card {
+    width: 100%;
+    max-width: 100%;
+    min-height: auto;
+    overflow: hidden;
+  }
+  
+  .mobile-card-content {
+    padding: 1rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
+/* Samsung Internet specific fixes */
+@media screen and (-webkit-min-device-pixel-ratio: 1) {
+  .samsung-safe-card {
+    -webkit-transform: translateZ(0); /* Force hardware acceleration */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  
+  .samsung-safe-text {
+    text-rendering: optimizeSpeed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Fix for fixed heights on mobile */
+@media (max-width: 640px) {
+  .fixed-height-mobile-fix {
+    height: auto !important;
+    min-height: 300px;
+  }
+  
+  .image-height-mobile-fix {
+    height: 200px !important;
+  }
+}
+
+/* Enhanced overflow handling */
+.overflow-safe {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.overflow-wrap-safe {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+}
+
+/* Samsung Internet Browser Specific Fixes */
+/* Detect Samsung Internet Browser */
+@media screen and (-webkit-min-device-pixel-ratio: 1) {
+  /* Samsung Internet uses WebKit but has specific quirks */
+  .samsung-browser-fix {
+    /* Force layer creation for better performance */
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    
+    /* Better text rendering */
+    -webkit-font-feature-settings: "liga", "kern";
+    font-feature-settings: "liga", "kern";
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Fix for backdrop-filter support */
+  .samsung-backdrop-fallback {
+    background: rgba(10, 25, 47, 0.95) !important;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* Force hardware acceleration on cards */
+.hw-accelerated {
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+}
+
+/* Line-clamp utilities for text truncation */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Safe Samsung compatibility styles that don't affect visual appearance */
+
+/* Prevent horizontal scroll on Samsung */
+.no-horizontal-scroll {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Samsung Internet Browser Detection and Fixes */
+/* Samsung Internet has a specific user agent and behavior */
+
+/* Text selection improvements for Samsung */
+::selection {
+  background-color: rgba(0, 188, 255, 0.3);
+  color: #ffffff;
+}
+
+::-moz-selection {
+  background-color: rgba(0, 188, 255, 0.3);
+  color: #ffffff;
+}
+
+/* Force minimum font sizes to prevent zooming on Samsung */
+input, select, textarea, button {
+  font-size: 16px !important; /* Prevents zoom on focus in Samsung browser */
+}
+
+/* Samsung specific media queries */
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-device-width: 320px) {
+  /* High DPI Samsung devices */
+  .samsung-text-fix {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .samsung-layout-fix {
+    /* Prevent layout shift on Samsung */
+    /* Note: contain: layout removed to prevent fixed positioning issues */
+    contain: style;
+  }
+}
+
+/* Improved touch targets for Samsung */
+.touch-target-safe {
+  min-height: 48px;
+  min-width: 48px;
+  padding: 12px;
+  touch-action: manipulation;
+}
+
+/* Samsung keyboard safe area */
+@media screen and (max-height: 500px) {
+  .keyboard-safe {
+    height: auto !important;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}
+
+/* Samsung specific flexbox fixes */
+.flex-safe {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.flex-safe-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+/* Responsive images for Samsung */
+.responsive-image-samsung {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Samsung browser scrolling improvements */
+.smooth-scroll-samsung {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  overscroll-behavior: none;
+}
+
+/* Fix for Samsung browser animation issues */
+@media (prefers-reduced-motion: reduce) {
+  .motion-safe-samsung {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Samsung browser color consistency */
+.color-consistent-samsung {
+  color: #ffffff;
+  background-color: transparent;
+  border-color: rgba(0, 188, 255, 0.3);
+}
+
+/* Memory optimization for Samsung */
+.memory-optimized {
+  contain: strict;
+  content-visibility: auto;
+  contain-intrinsic-size: 300px 400px;
+}
+
+/* Samsung specific transforms */
+.transform-safe {
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}

@@ -1,0 +1,43 @@
+Версии:
+Next.js → 14.2.28 (новая версия, требует Node 18.17+ или 20.x)
+React → 18.2.0
+TypeScript → 5.2.2
+ESLint → 9.24.0
+**@typescript-eslint/*** → 7.0.0`
+
+bash:
+# установка зависимостей
+npm install
+
+bash:
+# убрать несовместимые версии линтера
+npm remove eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser
+
+bash:
+# поставить совместимые версии
+npm i -D eslint@^8 @typescript-eslint/eslint-plugin@^6 @typescript-eslint/parser@^6
+
+package.json:
+в scripts добавить "export": "next export"
+
+next.config.js:
+Заменить контент на
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+    distDir: process.env.NEXT_DIST_DIR || '.next',
+    output: 'export', // ← ключ для статического экспорта
+    images: { unoptimized: true }, // если используешь <Image/>
+    eslint: { ignoreDuringBuilds: true },
+    typescript: { ignoreBuildErrors: false },
+    trailingSlash: true,
+};
+module.exports = nextConfig;
+
+bash:
+# сборка проекта
+# создаст статичный сайт в папке out
+npm run build
+
+bash:
+# запуск prod-версии локально
+npm run start
