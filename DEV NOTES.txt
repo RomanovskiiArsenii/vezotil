@@ -41,3 +41,15 @@ npm run build
 bash:
 # запуск prod-версии локально
 npm run start
+
+bash:
+npm run dev
+для запуска дев версии
+
+app\
+добавить файл
+custom.css
+
+app\layout.tsx
+добавить строку
+import './custom.css';
