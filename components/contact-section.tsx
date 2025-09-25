@@ -101,26 +101,26 @@ export default function ContactSection() {
                     </p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="custom-overflow-y-hide grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {/* Contact Information */}
                     <motion.div
                         initial={{ opacity: 0, x: -50 }}
                         animate={inView ? { opacity: 1, x: 0 } : {}}
                         transition={{ duration: 0.8, delay: 0.2 }}
-                        className="custom-flex-column custom-height-100 custom-overflow-y-hide space-y-8"
+                        className="custom-overflow-visible custom-flex-column custom-height-100 space-y-8"
                     >
                         <div className="custom-flex-grow-2 hud-element p-8 rounded-lg">
                             <h3 className="text-2xl font-bold hud-text mb-6">Контактная информация</h3>
-                            <div className="custom-overflow-y-hide space-y-6">
+                            <div className="custom-overflow-visible space-y-6">
                                 {contactInfo?.map((info, index) => (
                                     <motion.div
                                         key={info?.title}
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={inView ? { opacity: 1, y: 0 } : {}}
                                         transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                                        className="flex items-start space-x-4"
+                                        className="custom-overflow-visible flex items-start space-x-4"
                                     >
-                                        <div className="hud-element p-3 rounded-lg pulse-animation">
+                                        <div className="custom-overflow-visible hud-element p-3 rounded-lg pulse-animation">
                                             <info.icon className="w-6 h-6 hud-text" />
                                         </div>
                                         <div>

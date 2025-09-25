@@ -24,11 +24,31 @@ export default function ManufacturerSection() {
     ];
 
     const timeline = [
-        { year: '2020', event: 'Основание компании' },
-        { year: '2022', event: 'Резидент Сколково' },
-        { year: '2022', event: 'Разработка препаратов против FIP' },
-        { year: '2023', event: 'Разработка линейки анестетиков' },
-        { year: '2024', event: 'Выпуск ВЕЗОТИЛ' },
+        {
+            year: '2020',
+            event: 'Основание компании',
+            description: 'Создание ООО «ВЕТСТЕМ» с фокусом на инновационные ветеринарные решения',
+        },
+        {
+            year: '2022',
+            event: 'Резидент Сколково',
+            description: 'Получение статуса резидента инновационного центра Сколково',
+        },
+        {
+            year: '2022',
+            event: 'Разработка препаратов против FIP',
+            description: 'Разработка препаратов для лечения кошачьего инфекционного перитонита',
+        },
+        {
+            year: '2023',
+            event: 'Разработка линейки анестетиков',
+            description: 'Разработка препаратов для безопасной и эффективной анестезии животных',
+        },
+        {
+            year: '2024',
+            event: 'Выпуск ВЕЗОТИЛ',
+            description: 'Успешная регистрация инновационного препарата для анестезии животных',
+        },
     ];
 
     return (
@@ -48,7 +68,7 @@ export default function ManufacturerSection() {
                     </p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-16">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start mb-16">
                     {/* Company Info */}
                     <motion.div
                         initial={{ opacity: 0, x: -50 }}
@@ -181,16 +201,16 @@ export default function ManufacturerSection() {
                                     }`}
                                 >
                                     <div
-                                        className={`w-full lg:w-5/12 ${
+                                        className={`w-full lg:w-5/12 custom-width-50 ${
                                             index % 2 === 0 ? 'lg:text-right lg:pr-8' : 'lg:text-left lg:pl-8'
                                         } mb-4 lg:mb-0`}
                                     >
                                         <div className="bg-slate-800/50 p-4 rounded-lg border border-blue-400/30">
                                             <div className="hud-text font-bold text-xl mb-2">{item?.event}</div>
-                                            <div className="text-white">{item?.event}</div>
+                                            <div className="text-white">{item?.description}</div>
                                         </div>
                                     </div>
-                                    <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-blue-400 rounded-full pulse-animation hidden lg:block"></div>
+                                    <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-400 rounded-full pulse-animation hidden lg:block"></div>
                                 </motion.div>
                             ))}
                         </div>

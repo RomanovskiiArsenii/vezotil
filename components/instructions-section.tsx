@@ -132,10 +132,11 @@ export default function InstructionsSection() {
                                         className={`relative flex items-center ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`}
                                     >
                                         <div
-                                            className={`w-5/12 ${index % 2 === 0 ? 'text-right pr-8' : 'text-left pl-8'}`}
+                                            className={`w-5/12 custom-width-50 ${index % 2 === 0 ? 'text-right pr-8' : 'text-left pl-8'}`}
                                         >
                                             <div className="hud-element p-4 rounded-lg">
-                                                <div className="hud-text font-semibold">{item?.time}</div>
+                                                <div className="hud-text font-bold text-xl mb-2">{item?.time}</div>
+                                                {/* <div className="hud-text font-semibold">{item?.time}</div> */}
                                                 <div className="text-white">{item?.event}</div>
                                             </div>
                                         </div>

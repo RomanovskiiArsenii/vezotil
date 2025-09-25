@@ -76,6 +76,9 @@ header {
 .custom-margin-left-7 {
     margin-left: 7px;
 }
+.custom-padding-right-24 {
+    padding-right: 24px;
+}
 
 .custom-flex-column {
     display: flex;
@@ -90,6 +93,10 @@ header {
     flex-grow: 2;
 }
 
+.custom-flex-shrink-0 {
+    flex-shrink: 0;
+}
+
 .custom-underline {
     text-decoration: underline;
 }
@@ -100,11 +107,9 @@ header {
     align-items: center;
     justify-content: center;
 }
+
 .custom-object-contain svg {
     object-fit: contain;
-}
-.custom-flex-shrink-0 {
-    flex-shrink: 0;
 }
 
 .custom-alighn-self-end {
@@ -116,3 +121,64 @@ header {
         display: none;
     }
 }
+
+@media (min-width: 1024px) {
+    .custom-width-50 {
+        width: 50%;
+    }
+}
+
+.custom-after-before-no-poiner-events::after,
+.custom-after-before-no-poiner-events::before {
+    pointer-events: none;
+}
+
+.custom-max-width-550 {
+    max-width: 550px;
+}
+
+.custom-margin-top-auto {
+    margin-top: auto;
+}
+
+.custom-logo-bg {
+    background: linear-gradient(130deg, #dee5eb, #66a6e2);
+}
+
+@media (min-width: 1024px) {
+    .custom-field-height {
+        height: 44px;
+    }
+}
+
+.custom-focus {
+    border: 10px solid red !important;
+}
+
+.custom-news-card {
+    height: initial;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+}
+
+/* div::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+}
+div::-webkit-scrollbar-track {
+    margin: 0 10px;
+    background-color: #1c4263;
+    border-radius: 10px;
+}
+div::-webkit-scrollbar-thumb {
+    background-color: #2085aa;
+    border-radius: 10px;
+    border: 2px solid transparent;
+}
+div::-webkit-scrollbar-thumb:hover {
+    background-color: #338bf1;
+}
+div::-webkit-scrollbar-thumb:active {
+    background-color: #338bf1;
+} */

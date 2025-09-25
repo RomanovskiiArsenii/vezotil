@@ -1,4 +1,3 @@
-
 import { Metadata } from 'next';
 import PageLayout from '../../components/page-layouts/page-layout';
 import PageHeader from '../../components/page-layouts/page-header';
@@ -6,28 +5,30 @@ import ContentSection from '../../components/page-layouts/content-section';
 import NewsCard from '../../components/news-card';
 
 export const metadata: Metadata = {
-  title: 'Новости - ООО ВЕТСТЕМ | ВЕЗОТИЛ',
-  description: 'Актуальные новости о препарате ВЕЗОТИЛ, достижениях компании ООО ВЕТСТЕМ, клинических исследованиях и развитии ветеринарной фармацевтики.',
-  keywords: 'ВЕЗОТИЛ новости, ВЕТСТЕМ новости, ветеринарные препараты, клинические исследования, анестезия животных',
-  openGraph: {
-    title: 'Новости ООО ВЕТСТЕМ',
-    description: 'Последние новости о препарате ВЕЗОТИЛ и достижениях в ветеринарной фармацевтике',
-    type: 'website'
-  }
+    title: 'Новости - ООО ВЕТСТЕМ | ВЕЗОТИЛ',
+    description:
+        'Актуальные новости о препарате ВЕЗОТИЛ, достижениях компании ООО ВЕТСТЕМ, клинических исследованиях и развитии ветеринарной фармацевтики.',
+    keywords: 'ВЕЗОТИЛ новости, ВЕТСТЕМ новости, ветеринарные препараты, клинические исследования, анестезия животных',
+    openGraph: {
+        title: 'Новости ООО ВЕТСТЕМ',
+        description: 'Последние новости о препарате ВЕЗОТИЛ и достижениях в ветеринарной фармацевтике',
+        type: 'website',
+    },
 };
 
 // Mock data - в реальном проекте будет загружаться из CMS
 const news = [
-  {
-    id: '1',
-    title: 'ВЕЗОТИЛ получил регистрационное удостоверение Россельхознадзора',
-    slug: 'vezotil-registration-approved',
-    excerpt: 'Препарат ВЕЗОТИЛ успешно прошел все необходимые клинические испытания и получил официальную регистрацию для применения в ветеринарной практике на территории Российской Федерации.',
-    publishDate: '2023-05-15T10:00:00Z',
-    isImportant: true,
-    author: 'Пресс-служба ВЕТСТЕМ',
-    featuredImage: 'https://www.avma.org/sites/default/files/2025-04/AVMANews20250421-VAA-guidelines-620x413.jpg',
-    content: `
+    {
+        id: '1',
+        title: 'ВЕЗОТИЛ получил регистрационное удостоверение Россельхознадзора',
+        slug: 'vezotil-registration-approved',
+        excerpt:
+            'Препарат ВЕЗОТИЛ успешно прошел все необходимые клинические испытания и получил официальную регистрацию для применения в ветеринарной практике на территории Российской Федерации.',
+        publishDate: '2023-05-15T10:00:00Z',
+        isImportant: true,
+        author: 'Пресс-служба ВЕТСТЕМ',
+        featuredImage: 'https://www.avma.org/sites/default/files/2025-04/AVMANews20250421-VAA-guidelines-620x413.jpg',
+        content: `
       <p>Компания ООО "ВЕТСТЕМ" с гордостью сообщает о получении регистрационного удостоверения на инновационный препарат для анестезии животных ВЕЗОТИЛ от Россельхознадзора.</p>
       
       <p>Это знаменательное событие стало результатом многолетней работы команды ученых и ветеринарных специалистов, которые разрабатывали безопасный и эффективный препарат для общей анестезии кошек и собак.</p>
@@ -41,18 +42,19 @@ const news = [
       </ul>
       
       <p>ВЕЗОТИЛ содержит в своем составе тилетамина гидрохлорид и золазепама гидрохлорид в равных пропорциях, что обеспечивает стабильную и предсказуемую анестезию для различных ветеринарных процедур.</p>
-    `
-  },
-  {
-    id: '2',
-    title: 'Многоцентровые клинические исследования подтвердили высокую эффективность ВЕЗОТИЛ',
-    slug: 'clinical-studies-effectiveness',
-    excerpt: 'В ведущих ветеринарных клиниках России завершились масштабные клинические исследования препарата ВЕЗОТИЛ, которые показали превосходные результаты по всем ключевым показателям эффективности и безопасности.',
-    publishDate: '2023-03-20T14:00:00Z',
-    isImportant: true,
-    author: 'Научный отдел ВЕТСТЕМ',
-    featuredImage: 'https://www.sdstate.edu/sites/default/files/2020-05/lab-3498585_1920.jpg',
-    content: `
+    `,
+    },
+    {
+        id: '2',
+        title: 'Многоцентровые клинические исследования подтвердили высокую эффективность ВЕЗОТИЛ',
+        slug: 'clinical-studies-effectiveness',
+        excerpt:
+            'В ведущих ветеринарных клиниках России завершились масштабные клинические исследования препарата ВЕЗОТИЛ, которые показали превосходные результаты по всем ключевым показателям эффективности и безопасности.',
+        publishDate: '2023-03-20T14:00:00Z',
+        isImportant: true,
+        author: 'Научный отдел ВЕТСТЕМ',
+        featuredImage: 'https://www.sdstate.edu/sites/default/files/2020-05/lab-3498585_1920.jpg',
+        content: `
       <p>Результаты многоцентровых клинических исследований препарата ВЕЗОТИЛ продемонстрировали исключительную эффективность и безопасность при проведении анестезии у мелких домашних животных.</p>
       
       <h3>Основные результаты исследования:</h3>
@@ -65,18 +67,20 @@ const news = [
       </ul>
       
       <p>В исследованиях приняли участие более 500 животных различных пород и возрастов в 15 ветеринарных клиниках России.</p>
-    `
-  },
-  {
-    id: '3',
-    title: 'ООО "ВЕТСТЕМ" принимает участие в международной выставке "ВетФарм 2023"',
-    slug: 'vetfarm-2023-participation',
-    excerpt: 'Компания представила инновационный препарат ВЕЗОТИЛ на крупнейшей выставке ветеринарной фармацевтики, привлекшей внимание специалистов из более чем 20 стран мира.',
-    publishDate: '2023-10-15T12:00:00Z',
-    isImportant: false,
-    author: 'Отдел маркетинга ВЕТСТЕМ',
-    featuredImage: 'https://images.ctfassets.net/8hq8guzcncfs/193bpECLLwLevMta1b0tp2/6ec5191423757013367164882db00703/Dog_with_tiny_cone_on.jpg?fm=webp&w=1193',
-    content: `
+    `,
+    },
+    {
+        id: '3',
+        title: 'ООО "ВЕТСТЕМ" принимает участие в международной выставке "ВетФарм 2023"',
+        slug: 'vetfarm-2023-participation',
+        excerpt:
+            'Компания представила инновационный препарат ВЕЗОТИЛ на крупнейшей выставке ветеринарной фармацевтики, привлекшей внимание специалистов из более чем 20 стран мира.',
+        publishDate: '2023-10-15T12:00:00Z',
+        isImportant: false,
+        author: 'Отдел маркетинга ВЕТСТЕМ',
+        featuredImage:
+            'https://images.ctfassets.net/8hq8guzcncfs/193bpECLLwLevMta1b0tp2/6ec5191423757013367164882db00703/Dog_with_tiny_cone_on.jpg?fm=webp&w=1193',
+        content: `
       <p>С 15 по 17 октября 2023 года компания ООО "ВЕТСТЕМ" успешно представила свою продукцию на международной выставке ветеринарной фармацевтики "ВетФарм 2023".</p>
       
       <p>Наш стенд посетили более 300 ветеринарных специалистов, фармацевтов и представителей профильных компаний. Особый интерес вызвал препарат ВЕЗОТИЛ, который получил высокие оценки от экспертов отрасли.</p>
@@ -88,17 +92,19 @@ const news = [
         <li>Получена положительная оценка от международных экспертов</li>
         <li>Установлены контакты с потенциальными партнерами из стран СНГ</li>
       </ul>
-    `
-  },
-  {
-    id: '4',
-    title: 'Расширение производственных мощностей для увеличения выпуска ВЕЗОТИЛ',
-    slug: 'production-expansion-vezotil',
-    excerpt: 'В связи с растущим спросом на препарат ВЕЗОТИЛ компания ООО "ВЕТСТЕМ" инвестировала в модернизацию производственных линий и увеличение производственных мощностей.',
-    publishDate: '2024-01-10T09:00:00Z',
-    isImportant: false,
-    author: 'Производственный отдел',
-    content: `
+    `,
+    },
+    {
+        id: '4',
+        title: 'Расширение производственных мощностей для увеличения выпуска ВЕЗОТИЛ',
+        slug: 'production-expansion-vezotil',
+        excerpt:
+            'В связи с растущим спросом на препарат ВЕЗОТИЛ компания ООО "ВЕТСТЕМ" инвестировала в модернизацию производственных линий и увеличение производственных мощностей.',
+        publishDate: '2024-01-10T09:00:00Z',
+        isImportant: false,
+        author: 'Производственный отдел',
+        featuredImage: '/expansion-of-production-capacity.jpg',
+        content: `
       <p>Компания ООО "ВЕТСТЕМ" завершила масштабную модернизацию производственного комплекса, что позволило увеличить выпуск препарата ВЕЗОТИЛ в 2,5 раза.</p>
       
       <p>Инвестиции в размере 45 млн рублей были направлены на приобретение современного оборудования и автоматизацию производственных процессов.</p>
@@ -110,62 +116,62 @@ const news = [
         <li>Расширение складских площадей</li>
         <li>Обучение персонала работе с новым оборудованием</li>
       </ul>
-    `
-  }
+    `,
+    },
 ];
 
 export default function NewsPage() {
-  const breadcrumbs = [
-    { label: 'Главная', href: '/' },
-    { label: 'Новости', href: '/news' }
-  ];
+    const breadcrumbs = [
+        { label: 'Главная', href: '/' },
+        { label: 'Новости', href: '/news' },
+    ];
 
-  const importantNews = news.filter(item => item.isImportant);
-  const regularNews = news.filter(item => !item.isImportant);
+    const importantNews = news.filter((item) => item.isImportant);
+    const regularNews = news.filter((item) => !item.isImportant);
 
-  return (
-    <PageLayout>
-      <PageHeader
-        title="Новости компании"
-        subtitle="Актуальные новости о препарате ВЕЗОТИЛ, достижениях компании ООО ВЕТСТЕМ и развитии ветеринарной фармацевтики"
-        breadcrumbs={breadcrumbs}
-      />
+    return (
+        <PageLayout>
+            <PageHeader
+                title="Новости компании"
+                subtitle="Актуальные новости о препарате ВЕЗОТИЛ, достижениях компании ООО ВЕТСТЕМ и развитии ветеринарной фармацевтики"
+                breadcrumbs={breadcrumbs}
+            />
 
-      <ContentSection background="gradient">
-        <div className="space-y-16">
-          {/* Important news */}
-          {importantNews.length > 0 && (
-            <div className="space-y-8">
-              <div className="text-center">
-                <h2 className="text-3xl font-bold text-white mb-4">Важные новости</h2>
-                <p className="text-gray-300">Ключевые события и достижения компании</p>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {importantNews.map((item, index) => (
-                  <NewsCard key={item.id} {...item} index={index} />
-                ))}
-              </div>
-            </div>
-          )}
+            <ContentSection background="gradient">
+                <div className="space-y-16">
+                    {/* Important news */}
+                    {importantNews.length > 0 && (
+                        <div className="space-y-8">
+                            <div className="text-center">
+                                <h2 className="text-3xl font-bold text-white mb-4">Важные новости</h2>
+                                <p className="text-gray-300">Ключевые события и достижения компании</p>
+                            </div>
 
-          {/* Regular news */}
-          {regularNews.length > 0 && (
-            <div className="space-y-8">
-              <div className="text-center">
-                <h2 className="text-3xl font-bold text-white mb-4">Все новости</h2>
-                <p className="text-gray-300">Последние обновления и события компании</p>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {regularNews.map((item, index) => (
-                  <NewsCard key={item.id} {...item} index={index + importantNews.length} />
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </ContentSection>
-    </PageLayout>
-  );
+                            <div className="custom-overflow-y-hide grid grid-cols-1 md:grid-cols-2 gap-8">
+                                {importantNews.map((item, index) => (
+                                    <NewsCard key={item.id} {...item} index={index} />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Regular news */}
+                    {regularNews.length > 0 && (
+                        <div className="space-y-8">
+                            <div className="text-center">
+                                <h2 className="text-3xl font-bold text-white mb-4">Все новости</h2>
+                                <p className="text-gray-300">Последние обновления и события компании</p>
+                            </div>
+
+                            <div className="custom-overflow-y-hide grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {regularNews.map((item, index) => (
+                                    <NewsCard key={item.id} {...item} index={index + importantNews.length} />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </ContentSection>
+        </PageLayout>
+    );
 }
