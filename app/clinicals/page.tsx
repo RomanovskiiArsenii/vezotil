@@ -108,7 +108,7 @@ const clinicalStudies = [
         animals: '42 животных',
         duration: '3 месяца',
         href: '/clinicals/best-study',
-        logo: '/best_new_logo_fin.png',
+        logo: '/best_new_logo_fin.jpg',
         summary: 'Комплексное исследование препарата ВЕЗОТИЛ в условиях сетевых ветеринарных клиник Бэст',
         keyFindings: [
             'Стабильные результаты во всех филиалах сети',
@@ -142,7 +142,7 @@ const clinicalStudies = [
         animals: '52 животных различных видов',
         duration: '4 месяца',
         href: '/clinicals/moszoo-study',
-        logo: '/moszoo_new_logo_fin.png',
+        logo: '/moszoo_new_logo_fin.jpg',
         summary: 'Специализированное исследование применения ВЕЗОТИЛ у зоопарковых и экзотических видов животных',
         keyFindings: [
             'Отличная эффективность у разнообразных видов животных',
@@ -167,7 +167,7 @@ export default function ClinicalPage() {
                     {/* Introduction */}
                     <div className="glass-card p-8 space-y-6">
                         <h2 className="text-3xl font-bold text-cyan-100 mb-6 flex items-center gap-3">
-                            <FlaskConical className="w-8 h-8 text-cyan-400" />
+                            <FlaskConical className="custom-mobile-hide w-8 h-8 text-cyan-400" />
                             Результаты клинических исследований
                         </h2>
 
@@ -251,13 +251,13 @@ export default function ClinicalPage() {
                                                         alt={`Логотип ${study.clinic}`}
                                                         fill
                                                         className={`${
-                                                            study.id === 'best-clinical-study' ||
-                                                            study.id === 'moszoo-clinical-study'
-                                                                ? 'object-cover filter brightness-105 contrast-110'
-                                                                : study.id === 'vetlife-clinical-study'
-                                                                  ? 'object-cover filter brightness-105 contrast-110'
-                                                                  : // ? 'object-contain p-3 filter brightness-105 contrast-110'
-                                                                    'object-contain p-4'
+                                                            'object-cover filter brightness-105 contrast-110'
+                                                            // study.id === 'best-clinical-study' ||
+                                                            // study.id === 'moszoo-clinical-study'
+                                                            //     ? 'object-cover filter brightness-105 contrast-110'
+                                                            //     : study.id === 'vetlife-clinical-study'
+                                                            //       ? 'object-contain p-3 filter brightness-105 contrast-110'
+                                                            //       : 'object-contain p-4'
                                                         }`}
                                                         sizes="(max-width: 768px) 128px, 128px"
                                                     />

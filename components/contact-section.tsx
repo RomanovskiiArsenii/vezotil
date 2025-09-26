@@ -120,7 +120,7 @@ export default function ContactSection() {
                                         transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
                                         className="custom-overflow-visible flex items-start space-x-4"
                                     >
-                                        <div className="custom-overflow-visible hud-element p-3 rounded-lg pulse-animation">
+                                        <div className="custom-flex-shrink-0 custom-overflow-visible hud-element p-3 rounded-lg pulse-animation">
                                             <info.icon className="w-6 h-6 hud-text" />
                                         </div>
                                         <div>

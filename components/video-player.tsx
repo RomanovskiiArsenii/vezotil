@@ -105,7 +105,7 @@ export function VideoPlayer({ embedId, title, author, position, clinic, platform
                                     e.stopPropagation();
                                     handleFullscreen();
                                 }}
-                                className="w-8 h-8 bg-black/80 hover:bg-cyan-600/90 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:text-cyan-200 transition-colors border border-cyan-500/50 cursor-pointer"
+                                className="custom-mobile-hide w-8 h-8 bg-black/80 hover:bg-cyan-600/90 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:text-cyan-200 transition-colors border border-cyan-500/50 cursor-pointer"
                                 title="Полноэкранный режим"
                             >
                                 <Maximize className="w-4 h-4" />

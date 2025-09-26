@@ -13,7 +13,7 @@ export default function Footer() {
     }, []);
 
     return (
-        <footer className="bg-black/90 border-t border-blue-400/30">
+        <footer className="footer-trigger bg-black/90 border-t border-blue-400/30">
             <div className="container mx-auto px-4 lg:px-8 xl:px-12 py-12">
                 <div className="custom-overflow-y-hide grid grid-cols-1 md:grid-cols-3 gap-8">
                     {/* Company Info */}
@@ -92,8 +92,10 @@ export default function Footer() {
                     transition={{ duration: 0.6, delay: 0.5 }}
                     className="mt-12 text-center"
                 >
-                    <h3 className="text-lg font-semibold text-white mb-6">Мы в социальных сетях</h3>
-                    <div className="flex justify-center items-center gap-6 py-4">
+                    <h3 className="custom-footer-flex-reg  text-lg font-semibold text-white mb-6">
+                        Мы в социальных сетях
+                    </h3>
+                    <div className="custom-footer-flex-inner flex justify-center items-center gap-6 py-4">
                         {/* VKontakte */}
                         <motion.a
                             href="https://vk.com/vetstem"
@@ -165,7 +167,7 @@ export default function Footer() {
                                 Сообщить о побочном эффекте
                             </a>
                         </div>
-                        <div className="text-gray-400 text-sm text-center lg:text-right">
+                        <div className="custom-footer-flex-reg text-gray-400 text-sm text-center lg:text-right">
                             Регистрационное удостоверение:
                             <br />№ 77-3-29.23-5075ПВР-3-29.23/03889 от 28.12.2023 г.
                         </div>

@@ -77,8 +77,8 @@ export default function ManufacturerSection() {
                         className="custom-flex-column custom-height-100 space-y-6 h-fit"
                     >
                         <div className="custom-flex-grow-2 hud-element p-8 rounded-lg">
-                            <div className="flex items-center space-x-4 mb-6">
-                                <div className="hud-element p-4 rounded-lg pulse-animation">
+                            <div className="custom-overflow-visible flex items-center space-x-4 mb-6">
+                                <div className="custom-overflow-visible hud-element p-4 rounded-lg pulse-animation">
                                     <Building2 className="w-8 h-8 hud-text" />
                                 </div>
                                 <div>
@@ -166,7 +166,7 @@ export default function ManufacturerSection() {
                                 className="hud-element p-5 rounded-lg scan-line hover:medical-glow transition-all duration-300 mb-2 last:mb-0"
                             >
                                 <div className="flex items-center space-x-4">
-                                    <div className="hud-element p-3 rounded-lg">
+                                    <div className="custom-flex-shrink-0 hud-element p-3 rounded-lg">
                                         <achievement.icon className="w-6 h-6 hud-text" />
                                     </div>
                                     <div>

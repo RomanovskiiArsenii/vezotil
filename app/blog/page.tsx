@@ -49,11 +49,17 @@ const educationSections = [
     },
 ];
 export default function BlogEducationPage() {
+    const breadcrumbs = [
+        { label: 'Главная', href: '/' },
+        { label: 'Специалистам', href: '/blog' },
+    ];
+
     return (
         <PageLayout>
             <PageHeader
                 title="Блог и образование"
                 subtitle="Профессиональные материалы и образовательные ресурсы для ветеринарных специалистов"
+                breadcrumbs={breadcrumbs}
             />
 
             <ContentSection>

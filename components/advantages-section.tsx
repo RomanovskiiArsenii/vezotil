@@ -158,7 +158,7 @@ export default function AdvantagesSection() {
                                 className="hud-element p-6 rounded-lg scan-line group hover:medical-glow transition-all duration-300"
                             >
                                 <div className="flex items-start space-x-4">
-                                    <div className="hud-element p-3 rounded-lg group-hover:pulse-animation">
+                                    <div className="custom-flex-shrink-0 hud-element p-3 rounded-lg group-hover:pulse-animation">
                                         <advantage.icon className="w-6 h-6 hud-text" />
                                     </div>
                                     <div className="flex-1">

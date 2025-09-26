@@ -17,6 +17,7 @@
 
 .custom-nav-item {
     font-size: 16px;
+    white-space: nowrap;
 }
 .custom-nav-item-sm {
     font-size: 14px;
@@ -25,6 +26,9 @@
 .custom-nav-item-wrap-sm {
     display: inline-block;
     height: 36px;
+}
+.custom-nav-modal {
+    padding: 1rem;
 }
 @media (min-width: 1024px) {
     .custom-nav-hide {
@@ -64,6 +68,20 @@ header {
 }
 .custom-footer-flex-inner {
     justify-content: center;
+}
+
+@media (max-width: 1023px) {
+    .custom-footer-flex {
+        gap: 0;
+        align-items: flex-start;
+    }
+    .custom-footer-flex-inner {
+        justify-content: flex-start;
+    }
+    .custom-footer-flex-reg {
+        text-align: start;
+        margin-bottom: 0;
+    }
 }
 
 .custom-gap16 {
@@ -121,6 +139,11 @@ header {
         display: none;
     }
 }
+@media (max-width: 1023px) {
+    .custom-mobile-hide {
+        display: none;
+    }
+}
 
 @media (min-width: 1024px) {
     .custom-width-50 {
@@ -161,9 +184,33 @@ header {
     aspect-ratio: 3 / 2;
 }
 
-/* div::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+@media (max-width: 1023px) {
+    .custom-mobile-margin-left-0 {
+        margin-left: 0 !important;
+    }
+}
+
+@media (max-width: 1023px) {
+    .custom-mobile-overflow-visible {
+        overflow: visible;
+    }
+}
+
+@media (max-width: 1023px) {
+    .custom-mobile-padding-sides-0 {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+@media (max-width: 1023px) {
+    .custom-mobile-width-100 {
+        width: 100%;
+    }
+}
+
+div::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
     background-color: transparent;
 }
 div::-webkit-scrollbar-track {
@@ -181,4 +228,4 @@ div::-webkit-scrollbar-thumb:hover {
 }
 div::-webkit-scrollbar-thumb:active {
     background-color: #338bf1;
-} */
+}

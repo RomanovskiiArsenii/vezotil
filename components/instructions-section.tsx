@@ -157,8 +157,8 @@ export default function InstructionsSection() {
                                         transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
                                         className="relative flex items-start space-x-4"
                                     >
-                                        <div className="flex-shrink-0 w-4 h-4 bg-blue-400 rounded-full pulse-animation mt-2"></div>
-                                        <div className="flex-1">
+                                        <div className="custom-mobile-hide flex-shrink-0 w-4 h-4 bg-blue-400 rounded-full pulse-animation mt-2"></div>
+                                        <div className="custom-mobile-margin-left-0 flex-1">
                                             <div className="hud-element p-3 rounded-lg">
                                                 <div className="hud-text font-semibold text-sm mb-1">{item?.time}</div>
                                                 <div className="text-white text-sm leading-tight break-words">

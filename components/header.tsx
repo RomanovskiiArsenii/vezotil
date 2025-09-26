@@ -15,8 +15,8 @@ export default function Header() {
 
     const navItems = useMemo(
         () => [
-            { label: 'Преимущества', href: '#advantages', type: 'scroll' },
-            { label: 'Показания', href: '#indications', type: 'scroll' },
+            { label: 'Описание препарата', href: '/#about', type: 'link' },
+            // { label: 'Показания', href: '#indications', type: 'scroll' },
             { label: 'Производитель', href: '/about', type: 'link' },
             {
                 label: 'Специалистам',
@@ -29,7 +29,7 @@ export default function Header() {
                     { label: 'Клинические исследования', href: '/clinicals' },
                 ],
             },
-            { label: 'FAQ', href: '/faq', type: 'link' },
+            { label: 'Новости', href: '/news', type: 'link' },
             {
                 label: (
                     <>
@@ -39,9 +39,10 @@ export default function Header() {
                 href: '/video',
                 type: 'link',
             },
+            { label: 'FAQ', href: '/faq', type: 'link' },
             // добавлен span, который скрывает второе слово
             // { label: 'Отзывы\nврачей', href: '/video', type: 'link' },
-            { label: 'Контакты', href: '#contact', type: 'scroll' },
+            { label: 'Контакты', href: '/#contact', type: 'link' },
         ],
         []
     );
@@ -138,7 +139,7 @@ export default function Header() {
                     <div className="flex items-center space-x-3 p-2 custom-overflow-visible">
                         {/* Clickable Cardio Symbol */}
                         <motion.button
-                            className="hud-element p-2 m-1 rounded-lg pulse-animation hover:medical-glow transition-all duration-300 group"
+                            className="custom-flex-shrink-0 hud-element p-2 m-1 rounded-lg pulse-animation hover:medical-glow transition-all duration-300 group"
                             whileHover={{ scale: 1.05 }}
                             onClick={navigateToHome}
                             title="На главную"
@@ -150,7 +151,8 @@ export default function Header() {
                         <motion.button
                             className="text-left hover:medical-glow transition-all duration-300 p-2 m-1 rounded-lg group"
                             whileHover={{ scale: 1.02 }}
-                            onClick={() => navigateToSection('#about')}
+                            onClick={navigateToHome}
+                            // onClick={() => navigateToSection('#about')}
                             title="О препарате"
                         >
                             <h1 className="text-2xl font-bold hud-text group-hover:text-cyan-300">ВЕЗОТИЛ</h1>
@@ -262,7 +264,7 @@ export default function Header() {
                     transition={{ duration: 0.3 }}
                     className="lg:hidden overflow-hidden"
                 >
-                    <nav className="py-4 space-y-2 bg-slate-900/95 rounded-lg mt-2">
+                    <nav className="custom-nav-modal py-4 space-y-2 bg-slate-900/95 rounded-lg mt-2">
                         {navItems.map((item) => (
                             <div key={item.href}>
                                 {/* label больше не строка и его нельзя применить как ключ */}

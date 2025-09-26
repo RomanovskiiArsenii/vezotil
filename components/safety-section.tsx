@@ -91,7 +91,7 @@ export default function SafetySection() {
                             >
                                 <div className="flex items-start space-x-4">
                                     <div
-                                        className={`p-3 rounded-lg ${
+                                        className={`custom-flex-shrink-0 p-3 rounded-lg ${
                                             item?.severity === 'high'
                                                 ? 'bg-red-900/30 text-red-400'
                                                 : 'bg-amber-900/30 text-amber-400'

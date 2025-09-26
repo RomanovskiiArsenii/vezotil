@@ -235,7 +235,7 @@ export default function WebinarsPage() {
                     {/* Introduction */}
                     <div className="glass-card p-8 space-y-6">
                         <h2 className="text-3xl font-bold text-cyan-100 mb-6 flex items-center gap-3">
-                            <Video className="w-8 h-8 text-cyan-400" />
+                            <Video className="custom-mobile-hide w-8 h-8 text-cyan-400" />
                             Образовательные вебинары ВЕЗОТИЛ
                         </h2>
 

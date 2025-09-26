@@ -2,11 +2,36 @@
 
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 export function PartnerLogos() {
     const [hoveredLogo, setHoveredLogo] = useState<string | null>(null);
+    const [hidden, setHidden] = useState(false);
+
+    useEffect(() => {
+        const footer = document.querySelector('.footer-trigger');
+        if (!footer) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setHidden(true); // футер виден → скрываем
+                    } else {
+                        setHidden(false); // футер не виден → показываем
+                    }
+                });
+            },
+            { threshold: 0.1 } // срабатывание при 10% футера
+        );
+
+        observer.observe(footer);
+
+        return () => {
+            if (footer) observer.unobserve(footer);
+        };
+    }, []);
 
     const partners = [
         {
@@ -26,7 +51,11 @@ export function PartnerLogos() {
     ];
 
     return (
-        <div className="custom-overflow-visible fixed bottom-6 right-6 z-50 space-y-3">
+        <motion.div
+            className="custom-overflow-visible fixed bottom-6 right-6 z-50 space-y-3"
+            animate={{ opacity: hidden ? 0 : 1 }}
+            transition={{ duration: 0.5 }}
+        >
             {partners.map((partner, index) => (
                 <motion.div
                     key={partner.id}
@@ -51,14 +80,13 @@ export function PartnerLogos() {
                                     src={partner.logoPath}
                                     alt={`${partner.name} логотип`}
                                     fill
-                                    className="custom-overflow-visible object-contain rounded filter invert brightness-0 contrast-200 group-hover:filter-none transition-all duration-300"
+                                    className="custom-overflow-visible object-contain rounded filter invert brightness-50 contrast-200 group-hover:filter-none transition-all duration-300"
                                     sizes="56px"
                                 />
                             </div>
                         </div>
                     </motion.a>
 
-                    {/* Tooltip */}
                     {hoveredLogo === partner.id && (
                         <motion.div
                             initial={{ opacity: 0, x: 20 }}
@@ -74,6 +102,6 @@ export function PartnerLogos() {
                     )}
                 </motion.div>
             ))}
-        </div>
+        </motion.div>
     );
 }

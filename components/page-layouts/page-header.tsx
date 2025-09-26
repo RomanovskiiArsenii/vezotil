@@ -80,7 +80,7 @@ export default function PageHeader({
                             transition={{ duration: 0.3, delay: 0.15 }}
                             className="mb-8"
                         >
-                            <div className="flex items-center justify-center space-x-2 text-sm text-gray-400">
+                            <div className="custom-mobile-hide flex items-center justify-center space-x-2 text-sm text-gray-400">
                                 {breadcrumbs.map((crumb, index) => (
                                     <div key={index} className="flex items-center space-x-2">
                                         {index > 0 && <span className="text-gray-600">/</span>}

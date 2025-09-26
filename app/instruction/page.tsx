@@ -38,7 +38,7 @@ export default function InstructionPage() {
                                 <div className="glass-card p-6">
                                     <div className="flex items-center justify-between mb-6">
                                         <h2 className="text-2xl font-bold text-cyan-100 flex items-center gap-2">
-                                            <FileText className="w-6 h-6" />
+                                            <FileText className="custom-mobile-hide w-6 h-6" />
                                             Инструкция ВЕЗОТИЛ
                                         </h2>
                                         <a
@@ -46,7 +46,7 @@ export default function InstructionPage() {
                                             className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-lg text-sm font-semibold transition-all duration-300"
                                             download="Vezotil_Instruction.pdf"
                                         >
-                                            <Download className="w-4 h-4" />
+                                            <Download className="custom-flex-shrink-0 w-4 h-4" />
                                             Скачать PDF
                                         </a>
                                     </div>

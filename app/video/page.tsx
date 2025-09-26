@@ -12,6 +12,10 @@ export const metadata: Metadata = {
 };
 
 export default function VideoPage() {
+    const breadcrumbs = [
+        { label: 'Главная', href: '/' },
+        { label: 'Отзывы', href: '/video' },
+    ];
     // Данные видео из vezotil.ru/video
     const videos = [
         {
@@ -74,6 +78,7 @@ export default function VideoPage() {
             <PageHeader
                 title="Отзывы ветеринарных врачей"
                 subtitle="Мнения специалистов о применении ВЕЗОТИЛ в практике"
+                breadcrumbs={breadcrumbs}
             />
 
             <ContentSection>

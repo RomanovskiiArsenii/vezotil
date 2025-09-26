@@ -90,7 +90,7 @@ export default function PublicationsPage() {
                     {/* Introduction */}
                     <div className="glass-card p-8 space-y-6">
                         <h2 className="text-3xl font-bold text-cyan-100 mb-6 flex items-center gap-3">
-                            <BookOpen className="w-8 h-8 text-cyan-400" />
+                            <BookOpen className="custom-mobile-hide w-8 h-8 text-cyan-400" />
                             Научные публикации по препарату ВЕЗОТИЛ
                         </h2>
 

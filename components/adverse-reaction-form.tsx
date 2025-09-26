@@ -41,7 +41,7 @@ export function AdverseReactionForm() {
     };
 
     return (
-        <div className="medical-card p-6 space-y-6">
+        <div className="custom-mobile-padding-sides-0 medical-card p-6 space-y-6">
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
                     <div>
@@ -290,7 +290,7 @@ export function AdverseReactionForm() {
                     />
                 </div>
 
-                <div className="flex justify-end pt-6 border-t border-cyan-500/20">
+                <div className="flex justify-start pt-6 border-t border-cyan-500/20">
                     <button
                         type="submit"
                         className="px-8 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-lg hover:from-cyan-500 hover:to-blue-500 transition-all duration-300 font-semibold"
