@@ -151,8 +151,8 @@ export default function Header() {
                         <motion.button
                             className="text-left hover:medical-glow transition-all duration-300 p-2 m-1 rounded-lg group"
                             whileHover={{ scale: 1.02 }}
-                            onClick={navigateToHome}
-                            // onClick={() => navigateToSection('#about')}
+                            // onClick={navigateToHome}
+                            onClick={() => navigateToSection('#about')}
                             title="О препарате"
                         >
                             <h1 className="text-2xl font-bold hud-text group-hover:text-cyan-300">ВЕЗОТИЛ</h1>

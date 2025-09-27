@@ -206,7 +206,9 @@ export default function ManufacturerSection() {
                                         } mb-4 lg:mb-0`}
                                     >
                                         <div className="bg-slate-800/50 p-4 rounded-lg border border-blue-400/30">
-                                            <div className="hud-text font-bold text-xl mb-2">{item?.event}</div>
+                                            <div className="hud-text font-bold text-xl mb-2">
+                                                {item?.year} {item?.event}
+                                            </div>
                                             <div className="text-white">{item?.description}</div>
                                         </div>
                                     </div>

@@ -310,7 +310,7 @@ export default function WebinarsPage() {
                                             </div> */}
 
                                             {/* Webinar Info */}
-                                            <div className="lg:col-span-9 space-y-4">
+                                            <div className="lg:col-span-7 space-y-4">
                                                 <div className="space-y-3">
                                                     <h3 className="text-xl font-bold text-cyan-100 group-hover:text-cyan-50 transition-colors leading-tight">
                                                         {webinar.title}
@@ -366,12 +366,23 @@ export default function WebinarsPage() {
                                             </div>
 
                                             {/* Action Button */}
-                                            <div className="lg:col-span-3 flex justify-center">
+                                            <div className="custom-flex-column lg:col-span-5 flex justify-center">
+                                                <div className="lg:col-span-4">
+                                                    <VideoPlayer
+                                                        embedId={webinar.rutube_embed}
+                                                        title={webinar.title}
+                                                        author={webinar.speaker}
+                                                        position={webinar.position}
+                                                        clinic="Образовательный вебинар"
+                                                        platform="rutube"
+                                                    />
+                                                </div>
+
                                                 <a
                                                     href={webinar.rutube_url}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="group/btn relative px-6 py-3 bg-gradient-to-r from-red-600/30 to-red-500/30 hover:from-red-500/40 hover:to-red-400/40 border border-red-400/50 hover:border-red-300/70 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-red-500/20"
+                                                    className="custom-margin-top-16 group/btn relative px-6 py-3 bg-gradient-to-r from-red-600/30 to-red-500/30 hover:from-red-500/40 hover:to-red-400/40 border border-red-400/50 hover:border-red-300/70 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-red-500/20"
                                                 >
                                                     <div className="flex items-center gap-2 text-red-100 group-hover/btn:text-white font-medium">
                                                         <span>Смотреть на&nbsp;RUTUBE</span>
