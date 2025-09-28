@@ -14,6 +14,9 @@
 .custom-overflow-visible {
     overflow: visible;
 }
+.custom-overflow-y-scroll {
+    overflow-y: scroll;
+}
 
 .custom-nav-item {
     font-size: 16px;
@@ -88,16 +91,6 @@ header {
     gap: 16px;
 }
 
-.custom-margin-top-16 {
-    margin-top: 16px;
-}
-.custom-margin-left-7 {
-    margin-left: 7px;
-}
-.custom-padding-right-24 {
-    padding-right: 24px;
-}
-
 .custom-flex-column {
     display: flex;
     flex-direction: column;
@@ -151,9 +144,69 @@ header {
     }
 }
 
+#custom-webinars-id .custom-display-none-video {
+    display: none;
+}
+#custom-rewiews-id .custom-padding-top-100-video {
+    padding-top: 100px;
+}
+#custom-rewiews-id .custom-max-height-video {
+    max-height: clamp(420px, calc(100vh - 80px - 40px - 102px), 550px) !important;
+}
+#custom-rewiews-id .custom-max-width-video {
+    max-width: calc(100% - 1.5rem - 189px);
+}
+
+@media (max-height: 820px) {
+    #custom-rewiews-id .custom-display-none-video-top {
+        display: none;
+    }
+}
+@media (max-height: 700px) {
+    #custom-rewiews-id .custom-max-width-video {
+        max-width: calc(100% - 1.5rem - 189px - 25vh);
+    }
+    #custom-rewiews-id .custom-justify-video {
+        justify-content: space-between;
+    }
+}
+
+.custom-margin-top-16 {
+    margin-top: 16px;
+}
+.custom-margin-left-7 {
+    margin-left: 7px;
+}
+.custom-margin-top-40 {
+    margin-top: 40px;
+}
+.custom-padding-top-80 {
+    padding-top: 80px;
+}
+
+.custom-padding-right-24 {
+    padding-right: 24px;
+}
+
+.custom-inset-height-100 {
+    left: 0;
+    right: 0;
+    top: 0;
+    min-height: 120vh;
+    height: fit-content;
+    overflow-y: scroll;
+}
+
+.custom-no-poiner-events,
 .custom-after-before-no-poiner-events::after,
 .custom-after-before-no-poiner-events::before {
     pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+    .custom-pc-min-height-535 {
+        min-height: 535px;
+    }
 }
 
 .custom-max-width-550 {

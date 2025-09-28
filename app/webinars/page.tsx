@@ -285,7 +285,7 @@ export default function WebinarsPage() {
                     </div>
 
                     {/* Webinars Grid */}
-                    <div className="custom-overflow-visible space-y-8">
+                    <div className="custom-overflow-visible space-y-8" id="custom-webinars-id">
                         <div className="custom-overflow-visible grid gap-8">
                             {filteredWebinars.map((webinar, index) => (
                                 <motion.div
@@ -295,7 +295,7 @@ export default function WebinarsPage() {
                                     transition={{ duration: 0.6, delay: index * 0.1 }}
                                     className="custom-overflow-y-hide group"
                                 >
-                                    <div className="hud-element p-8 rounded-xl scan-line hover:medical-glow transition-all duration-500 custom-after-before-no-poiner-events">
+                                    <div className="custom-pc-min-height-535 hud-element p-8 rounded-xl scan-line hover:medical-glow transition-all duration-500 custom-after-before-no-poiner-events">
                                         <div className="grid lg:grid-cols-12 gap-8 items-start">
                                             {/* Video Preview */}
                                             {/* <div className="lg:col-span-4">

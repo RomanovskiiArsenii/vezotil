@@ -21,12 +21,30 @@ export function VideoPlayer({ embedId, title, author, position, clinic, platform
     const getEmbedUrl = (autostart: boolean = false) => {
         switch (platform) {
             case 'rutube':
-                // return `https://www.youtube.com/embed/GgnClrx8N2k?si=lN9glqDZ3sRQnv11`;
                 return `https://rutube.ru/play/embed/${embedId}/?autostart=${autostart ? 1 : 0}&muted=0&skinColor=rgb(56,189,248)&t=0s`;
             default:
                 return `https://rutube.ru/play/embed/${embedId}/?autostart=${autostart ? 1 : 0}&skinColor=rgb(56,189,248)`;
         }
     };
+
+    useEffect(() => {
+        const handleStop = () => {
+            setIsPlayingInWindow(false);
+        };
+        window.addEventListener('stop-all-videos', handleStop);
+        return () => window.removeEventListener('stop-all-videos', handleStop);
+    }, []);
+
+    useEffect(() => {
+        const handleEsc = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                setIsPlaying(false);
+            }
+        };
+
+        window.addEventListener('keydown', handleEsc);
+        return () => window.removeEventListener('keydown', handleEsc);
+    }, []);
 
     const handleGoBack = () => {
         setIsPlaying(false);
@@ -40,12 +58,17 @@ export function VideoPlayer({ embedId, title, author, position, clinic, platform
     };
 
     const handlePlayInWindow = () => {
+        // Останавливаем другие плееры
+        window.dispatchEvent(new CustomEvent('stop-all-videos'));
+
         setIsPlayingInWindow(true);
     };
 
     const handleFullscreen = () => {
+        // Останавливаем другие плееры
+        window.dispatchEvent(new CustomEvent('stop-all-videos'));
+
         setIsPlaying(true);
-        setIsPlayingInWindow(false);
     };
 
     // Автоскрытие информационной плашки через 4 секунды
@@ -156,7 +179,7 @@ export function VideoPlayer({ embedId, title, author, position, clinic, platform
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4"
+                        className="custom-padding-top-100-video custom-overflow-y-hide fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4"
                         onClick={() => setIsPlaying(false)}
                     >
                         {/* Medical HUD Background */}
@@ -175,7 +198,7 @@ export function VideoPlayer({ embedId, title, author, position, clinic, platform
                         </div>
 
                         {/* HUD Elements */}
-                        <div className="absolute top-4 left-4 flex items-center gap-4 text-cyan-400 z-10">
+                        <div className="custom-padding-top-80 custom-display-none-video custom-display-none-video-top absolute top-4 left-4 flex items-center gap-4 text-cyan-400 z-10">
                             <div className="flex items-center gap-2">
                                 <Monitor className="w-5 h-5" />
                                 <span className="text-sm font-mono">MEDICAL VIEWER v2.1</span>
@@ -186,7 +209,7 @@ export function VideoPlayer({ embedId, title, author, position, clinic, platform
                             </div>
                         </div>
 
-                        <div className="absolute top-4 right-4 flex items-center gap-4 text-cyan-400 z-10">
+                        <div className="custom-padding-top-80 custom-display-none-video custom-display-none-video-top absolute top-4 right-4 flex items-center gap-4 text-cyan-400 z-10">
                             <div className="flex items-center gap-2">
                                 <Zap className="w-4 h-4" />
                                 <span className="text-sm font-mono">HD QUALITY</span>
@@ -194,13 +217,14 @@ export function VideoPlayer({ embedId, title, author, position, clinic, platform
                         </div>
 
                         <div className="custom-overflow-visible relative w-full max-w-7xl space-y-4">
-                            <div className="custom-overflow-visible flex items-center gap-6">
+                            <div className="justify-end custom-justify-video custom-overflow-visible flex items-center gap-6">
                                 {/* Exit button - left side */}
                                 <motion.button
                                     initial={{ opacity: 0, x: -30 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     exit={{ opacity: 0, x: -30 }}
-                                    onClick={handleExitToVideoPage}
+                                    onClick={() => setIsPlaying(false)}
+                                    // onClick={handleExitToVideoPage}
                                     className="flex-shrink-0 group flex flex-col items-center gap-3 p-4 bg-slate-800/90 hover:bg-slate-700/90 backdrop-blur-sm rounded-xl border border-cyan-500/50 text-white hover:text-cyan-400 transition-all duration-300 shadow-lg"
                                     title="Выход из режима воспроизведения"
                                 >
@@ -216,16 +240,16 @@ export function VideoPlayer({ embedId, title, author, position, clinic, platform
                                     initial={{ scale: 0.8, opacity: 0 }}
                                     animate={{ scale: 1, opacity: 1 }}
                                     exit={{ scale: 0.8, opacity: 0 }}
-                                    className="relative flex-1 bg-black rounded-lg overflow-hidden border-2 border-cyan-500/50 shadow-2xl shadow-cyan-500/20"
+                                    className="custom-max-height-video custom-max-width-video relative flex-1 bg-black rounded-lg overflow-hidden border-2 border-cyan-500/50 shadow-2xl shadow-cyan-500/20"
                                     style={{
                                         aspectRatio: '16/9',
-                                        maxHeight: '80vh',
+                                        maxHeight: '500px',
                                         width: '100%',
                                     }}
                                     onClick={(e) => e.stopPropagation()}
                                 >
                                     {/* Close button - top right */}
-                                    <div className="absolute top-4 right-4 z-30">
+                                    <div className="custom-z-top absolute top-4 right-4 z-30">
                                         <button
                                             onClick={() => setIsPlaying(false)}
                                             className="w-10 h-10 bg-slate-800/90 hover:bg-red-600/90 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:text-red-400 transition-colors border border-cyan-500/50"
@@ -285,7 +309,7 @@ export function VideoPlayer({ embedId, title, author, position, clinic, platform
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: 20 }}
-                                className="bg-slate-800/90 backdrop-blur-sm rounded-lg p-4 border border-cyan-500/50 shadow-lg ml-24"
+                                className="custom-display-none-video bg-slate-800/90 backdrop-blur-sm rounded-lg p-4 border border-cyan-500/50 shadow-lg"
                             >
                                 <div className="flex items-center justify-between">
                                     <div className="flex-1">
