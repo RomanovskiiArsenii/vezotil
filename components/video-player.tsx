@@ -18,17 +18,27 @@ export function VideoPlayer({ embedId, title, author, position, clinic, platform
     const [isPlayingInWindow, setIsPlayingInWindow] = useState(false);
     const [showInfoCard, setShowInfoCard] = useState(true);
 
+    // const getEmbedUrl = (autostart: boolean = false) => {
+    //     switch (platform) {
+    //         case 'rutube':
+    //             return `https://rutube.ru/play/embed/${embedId}/?autostart=${autostart ? 1 : 0}&muted=0&skinColor=rgb(56,189,248)&t=0s`;
+    //         default:
+    //             return `https://rutube.ru/play/embed/${embedId}/?autostart=${autostart ? 1 : 0}&skinColor=rgb(56,189,248)`;
+    //     }
+    // };
+
     const getEmbedUrl = (autostart: boolean = false) => {
         switch (platform) {
             case 'rutube':
-                return `https://rutube.ru/play/embed/${embedId}/?autostart=${autostart ? 1 : 0}&muted=0&skinColor=rgb(56,189,248)&t=0s`;
+                return `https://rutube.ru/play/embed/${embedId}/?autostart=0&muted=0&skinColor=rgb(56,189,248)&t=0s&ts=${Date.now()}`;
             default:
-                return `https://rutube.ru/play/embed/${embedId}/?autostart=${autostart ? 1 : 0}&skinColor=rgb(56,189,248)`;
+                return `https://rutube.ru/play/embed/${embedId}/?autostart=0&skinColor=rgb(56,189,248)&ts=${Date.now()}`;
         }
     };
 
     useEffect(() => {
         const handleStop = () => {
+            setIsPlaying(false);
             setIsPlayingInWindow(false);
         };
         window.addEventListener('stop-all-videos', handleStop);
@@ -65,9 +75,10 @@ export function VideoPlayer({ embedId, title, author, position, clinic, platform
     };
 
     const handleFullscreen = () => {
-        // Останавливаем другие плееры
+        // // Останавливаем другие плееры
         window.dispatchEvent(new CustomEvent('stop-all-videos'));
 
+        // setIsPlayingInWindow(false);
         setIsPlaying(true);
     };
 
