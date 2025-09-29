@@ -310,7 +310,7 @@ export default function InstructionPage() {
                                             <p className="text-white font-mono text-xs">
                                                 № 77-3-29.23-5075ПВР-3-29.23/03889
                                             </p>
-                                            <p className="text-gray-300">от 28.12.2023 г.</p>
+                                            <p className="text-gray-300">от 12.04.2024 г.</p>
                                         </div>
                                         <div>
                                             <span className="text-gray-400">Активные вещества:</span>

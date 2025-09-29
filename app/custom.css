@@ -100,6 +100,10 @@ header {
     height: 100%;
 }
 
+.custom-justify-sb {
+    justify-content: space-between;
+}
+
 .custom-flex-grow-2 {
     flex-grow: 2;
 }
@@ -221,12 +225,6 @@ header {
     background: linear-gradient(130deg, #dee5eb, #66a6e2);
 }
 
-@media (min-width: 1024px) {
-    .custom-field-height {
-        height: 44px;
-    }
-}
-
 .custom-focus {
     border: 10px solid red !important;
 }
@@ -281,4 +279,20 @@ div::-webkit-scrollbar-thumb:hover {
 }
 div::-webkit-scrollbar-thumb:active {
     background-color: #338bf1;
+}
+
+#contact input {
+    height: 44px;
+}
+
+#custom-id-adverse-reaction-form input,
+#custom-id-adverse-reaction-form select{
+    height: 44px;
+}
+
+@media (max-width: 767px) {
+    #custom-id-adverse-reaction-form input,
+    #custom-id-adverse-reaction-form select{
+    width: 100%;
+    }
 }

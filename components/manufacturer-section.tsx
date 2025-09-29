@@ -130,7 +130,7 @@ export default function ManufacturerSection() {
                                             <p className="text-gray-300 font-mono text-xs">
                                                 № 77-3-29.23-5075ПВР-3-29.23/03889
                                             </p>
-                                            <p className="text-gray-300">от 28.12.2023 г.</p>
+                                            <p className="text-gray-300">от 12.04.2024 г.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -240,7 +240,7 @@ export default function ManufacturerSection() {
                         </div>
                         <div className="hud-element p-6 rounded-lg">
                             <Calendar className="w-12 h-12 hud-text mx-auto mb-4" />
-                            <h4 className="text-white font-semibold mb-2">Росздравнадзор</h4>
+                            <h4 className="text-white font-semibold mb-2">Россельхознадзор</h4>
                             <p className="text-gray-400">Государственная регистрация</p>
                         </div>
                     </div>

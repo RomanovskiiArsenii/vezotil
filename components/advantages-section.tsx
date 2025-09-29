@@ -21,8 +21,8 @@ export default function AdvantagesSection() {
         {
             icon: Zap,
             title: 'Быстрое действие',
-            description: 'Наступление анестезии через 2-5 минут после введения',
-            stats: '2-5 мин до эффекта',
+            description: 'Наступление анестезии через 3-5 минут после введения',
+            stats: '3-5 мин до эффекта',
         },
         {
             icon: Heart,
@@ -73,7 +73,7 @@ export default function AdvantagesSection() {
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                     {/* Video section with two videos */}
-                    <div className="space-y-8">
+                    <div className="custom-height-100 custom-flex-column custom-justify-sb space-y-8">
                         {/* Dog video */}
                         <motion.div
                             initial={{ opacity: 0, x: -50 }}
@@ -148,7 +148,7 @@ export default function AdvantagesSection() {
                     </div>
 
                     {/* Right side - Advantages list */}
-                    <div className="custom-overflow-y-hide grid grid-cols-1 gap-6">
+                    <div className="custom-height-100 custom-overflow-y-hide grid grid-cols-1 gap-6">
                         {advantages?.map((advantage, index) => (
                             <motion.div
                                 key={advantage?.title}

@@ -184,7 +184,7 @@ export default function VideoPage() {
                                     <ul className="space-y-2">
                                         <li className="flex items-center gap-2">
                                             <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full"></span>
-                                            Быстрое наступление анестезии (2-5 минут)
+                                            Быстрое наступление анестезии (3-5 минут)
                                         </li>
                                         <li className="flex items-center gap-2">
                                             <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full"></span>

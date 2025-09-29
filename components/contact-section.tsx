@@ -60,24 +60,55 @@ export default function ContactSection() {
         });
     };
 
+    // const handleSubmit = async (e: React.FormEvent) => {
+    //     e.preventDefault();
+    //     setIsSubmitting(true);
+
+    //     try {
+    //         // Simulate API call
+    //         await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    //         toast({
+    //             title: 'Заявка отправлена!',
+    //             description: 'Мы свяжемся с вами в ближайшее время.',
+    //         });
+
+    //         setFormData({ name: '', email: '', phone: '', message: '' });
+    //     } catch (error) {
+    //         toast({
+    //             title: 'Ошибка',
+    //             description: 'Не удалось отправить заявку. Попробуйте еще раз.',
+    //             variant: 'destructive',
+    //         });
+    //     } finally {
+    //         setIsSubmitting(false);
+    //     }
+    // };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
 
         try {
-            // Simulate API call
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-
-            toast({
-                title: 'Заявка отправлена!',
-                description: 'Мы свяжемся с вами в ближайшее время.',
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
             });
 
-            setFormData({ name: '', email: '', phone: '', message: '' });
+            if (res.ok) {
+                toast({
+                    title: 'Заявка отправлена!',
+                    description: 'Мы свяжемся с вами в ближайшее время.',
+                });
+                setFormData({ name: '', email: '', phone: '', message: '' });
+            } else {
+                throw new Error('Ошибка при отправке');
+            }
         } catch (error) {
             toast({
                 title: 'Ошибка',
-                description: 'Не удалось отправить заявку. Попробуйте еще раз.',
+                description: 'Не удалось отправить заявку. Попробуйте ещё раз.',
                 variant: 'destructive',
             });
         } finally {

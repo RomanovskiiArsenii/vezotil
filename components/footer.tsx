@@ -169,7 +169,7 @@ export default function Footer() {
                         </div>
                         <div className="custom-footer-flex-reg text-gray-400 text-sm text-center lg:text-right">
                             Регистрационное удостоверение:
-                            <br />№ 77-3-29.23-5075ПВР-3-29.23/03889 от 28.12.2023 г.
+                            <br />№ 77-3-29.23-5075ПВР-3-29.23/03889 от 12.04.2024 г.
                         </div>
                     </div>
                 </motion.div>

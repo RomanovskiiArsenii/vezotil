@@ -1,8 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import { useToast } from '../hooks/use-toast';
 
 export function AdverseReactionForm() {
+    const { toast } = useToast();
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const [formData, setFormData] = useState({
         date: '',
         reporterType: '',
@@ -27,10 +31,57 @@ export function AdverseReactionForm() {
         reactionDate: '',
     });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Здесь будет логика отправки формы
-        console.log('Form submitted:', formData);
+        setIsSubmitting(true);
+
+        try {
+            const res = await fetch('/api/adverse-reaction', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+
+            if (res.ok) {
+                toast({
+                    title: 'Отчёт отправлен!',
+                    description: 'Спасибо, мы получили вашу информацию.',
+                });
+                setFormData({
+                    date: '',
+                    reporterType: '',
+                    reporterName: '',
+                    reporterPhone: '',
+                    reporterEmail: '',
+                    organizationName: '',
+                    ownerName: '',
+                    ownerPhone: '',
+                    batchNumber: '',
+                    purchasePlace: '',
+                    reactionDescription: '',
+                    dose: '',
+                    administrationRoute: '',
+                    duration: '',
+                    animalSpecies: '',
+                    animalAge: '',
+                    animalWeight: '',
+                    animalSex: '',
+                    medicalHistory: '',
+                    concomitantTherapy: '',
+                    reactionDate: '',
+                });
+            } else {
+                throw new Error('Ошибка при отправке');
+            }
+        } catch (error) {
+            toast({
+                title: 'Ошибка',
+                description: 'Не удалось отправить отчёт. Попробуйте ещё раз.',
+                variant: 'destructive',
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -42,7 +93,7 @@ export function AdverseReactionForm() {
 
     return (
         <div className="custom-mobile-padding-sides-0 medical-card p-6 space-y-6">
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6" id="custom-id-adverse-reaction-form">
                 <div className="grid md:grid-cols-2 gap-4">
                     <div>
                         <label className="block text-sm font-medium text-cyan-200 mb-2">Дата заполнения отчета</label>
@@ -62,7 +113,7 @@ export function AdverseReactionForm() {
                             name="reporterType"
                             value={formData.reporterType}
                             onChange={handleChange}
-                            className="custom-field-height w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
+                            className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
                             required
                         >
                             <option value="">Выберите</option>
@@ -162,7 +213,7 @@ export function AdverseReactionForm() {
                                 name="dose"
                                 value={formData.dose}
                                 onChange={handleChange}
-                                className="custom-field-height w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
+                                className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
                                 placeholder="мг/кг"
                             />
                         </div>
@@ -172,7 +223,7 @@ export function AdverseReactionForm() {
                                 name="administrationRoute"
                                 value={formData.administrationRoute}
                                 onChange={handleChange}
-                                className="custom-field-height w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
+                                className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
                             >
                                 <option value="">Выберите</option>
                                 <option value="iv">Внутривенно</option>
@@ -186,7 +237,7 @@ export function AdverseReactionForm() {
                                 name="duration"
                                 value={formData.duration}
                                 onChange={handleChange}
-                                className="custom-field-height w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
+                                className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
                                 placeholder="мин/часов"
                             />
                         </div>
@@ -202,7 +253,7 @@ export function AdverseReactionForm() {
                                 name="animalSpecies"
                                 value={formData.animalSpecies}
                                 onChange={handleChange}
-                                className="custom-field-height w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
+                                className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
                                 required
                             >
                                 <option value="">Выберите</option>
@@ -217,7 +268,7 @@ export function AdverseReactionForm() {
                                 name="animalAge"
                                 value={formData.animalAge}
                                 onChange={handleChange}
-                                className="custom-field-height w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
+                                className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
                                 placeholder="лет/месяцев"
                             />
                         </div>
@@ -228,7 +279,7 @@ export function AdverseReactionForm() {
                                 name="animalWeight"
                                 value={formData.animalWeight}
                                 onChange={handleChange}
-                                className="custom-field-height w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
+                                className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
                                 placeholder="кг"
                             />
                         </div>
@@ -238,7 +289,7 @@ export function AdverseReactionForm() {
                                 name="animalSex"
                                 value={formData.animalSex}
                                 onChange={handleChange}
-                                className="custom-field-height w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
+                                className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
                             >
                                 <option value="">Выберите</option>
                                 <option value="male">Самец</option>
@@ -293,9 +344,10 @@ export function AdverseReactionForm() {
                 <div className="flex justify-start pt-6 border-t border-cyan-500/20">
                     <button
                         type="submit"
-                        className="px-8 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-lg hover:from-cyan-500 hover:to-blue-500 transition-all duration-300 font-semibold"
+                        disabled={isSubmitting}
+                        className="px-8 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-lg hover:from-cyan-500 hover:to-blue-500 transition-all duration-300 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        Отправить отчет
+                        {isSubmitting ? 'Отправляется...' : 'Отправить отчёт'}
                     </button>
                 </div>
             </form>
