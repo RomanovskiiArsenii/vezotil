@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useToast } from '../hooks/use-toast';
+import { log } from 'console';
 
 export function AdverseReactionForm() {
     const { toast } = useToast();
@@ -13,12 +14,9 @@ export function AdverseReactionForm() {
         reporterName: '',
         reporterPhone: '',
         reporterEmail: '',
-        organizationName: '',
-        ownerName: '',
-        ownerPhone: '',
         batchNumber: '',
         purchasePlace: '',
-        reactionDescription: '',
+        purchaseDate: '',
         dose: '',
         administrationRoute: '',
         duration: '',
@@ -28,6 +26,7 @@ export function AdverseReactionForm() {
         animalSex: '',
         medicalHistory: '',
         concomitantTherapy: '',
+        reactionDescription: '',
         reactionDate: '',
     });
 
@@ -46,6 +45,7 @@ export function AdverseReactionForm() {
                 toast({
                     title: 'Отчёт отправлен!',
                     description: 'Спасибо, мы получили вашу информацию.',
+                    duration: 10000,
                 });
                 setFormData({
                     date: '',
@@ -53,12 +53,9 @@ export function AdverseReactionForm() {
                     reporterName: '',
                     reporterPhone: '',
                     reporterEmail: '',
-                    organizationName: '',
-                    ownerName: '',
-                    ownerPhone: '',
                     batchNumber: '',
                     purchasePlace: '',
-                    reactionDescription: '',
+                    purchaseDate: '',
                     dose: '',
                     administrationRoute: '',
                     duration: '',
@@ -68,6 +65,7 @@ export function AdverseReactionForm() {
                     animalSex: '',
                     medicalHistory: '',
                     concomitantTherapy: '',
+                    reactionDescription: '',
                     reactionDate: '',
                 });
             } else {
@@ -77,6 +75,7 @@ export function AdverseReactionForm() {
             toast({
                 title: 'Ошибка',
                 description: 'Не удалось отправить отчёт. Попробуйте ещё раз.',
+                duration: 2500,
                 variant: 'destructive',
             });
         } finally {
@@ -93,23 +92,79 @@ export function AdverseReactionForm() {
 
     return (
         <div className="custom-mobile-padding-sides-0 medical-card p-6 space-y-6">
-            <form onSubmit={handleSubmit} className="space-y-6" id="custom-id-adverse-reaction-form">
+            <form
+                onSubmit={handleSubmit}
+                onInvalid={(e) => {
+                    const native = e.nativeEvent as InputEvent & { stopImmediatePropagation?: () => void };
+                    native.stopImmediatePropagation?.(); // блокируем остальные onInvalid
+
+                    const invalidElements = Array.from(
+                        (e.currentTarget as HTMLFormElement).querySelectorAll(
+                            'input:invalid, select:invalid, textarea:invalid'
+                        )
+                    ) as (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement)[];
+
+                    if (invalidElements.length > 0) {
+                        const firstInvalid = invalidElements[0];
+
+                        // ищем текст лейбла, если он есть
+                        let label = '';
+                        if (firstInvalid.id) {
+                            const associatedLabel = document.querySelector(`label[for="${firstInvalid.id}"]`);
+                            const text = associatedLabel?.textContent?.trim();
+                            if (text) {
+                                label = `"${text}"`; // оборачиваем в кавычки только если нашли
+                            }
+                        }
+
+                        if (firstInvalid.validity.valueMissing) {
+                            toast({
+                                title: 'Ошибка',
+                                description: label
+                                    ? `Поле ${label} обязательно для заполнения`
+                                    : `Обязательное поле не заполнено`,
+                                variant: 'destructive',
+                                duration: 2500,
+                            });
+                        } else if (firstInvalid.validity.typeMismatch) {
+                            toast({
+                                title: 'Ошибка',
+                                description: label
+                                    ? `Поле ${label} заполнено некорректно`
+                                    : `Поле заполнено некорректно`,
+                                variant: 'destructive',
+                                duration: 2500,
+                            });
+                        }
+                    }
+                }}
+                className="space-y-6"
+                id="custom-id-adverse-reaction-form"
+            >
                 <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                        <label className="block text-sm font-medium text-cyan-200 mb-2">Дата заполнения отчета</label>
+                        <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpReportDate">
+                            Дата заполнения отчета
+                        </label>
                         <input
+                            id="inpReportDate"
                             type="date"
                             name="date"
                             value={formData.date}
                             onChange={handleChange}
                             className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
-                            required
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-cyan-200 mb-2">Кто сообщает</label>
+                        <label
+                            className="custom-required block text-sm font-medium text-cyan-200 mb-2"
+                            htmlFor="inpReporterType"
+                        >
+                            Кто сообщает
+                        </label>
                         <select
+                            id="inpReporterType"
                             name="reporterType"
                             value={formData.reporterType}
                             onChange={handleChange}
@@ -117,8 +172,8 @@ export function AdverseReactionForm() {
                             required
                         >
                             <option value="">Выберите</option>
-                            <option value="veterinarian">Ветеринарный врач</option>
-                            <option value="owner">Владелец животного</option>
+                            <option value="Ветеринарный врач">Ветеринарный врач</option>
+                            <option value="Владелец животного">Владелец животного</option>
                         </select>
                     </div>
                 </div>
@@ -127,8 +182,14 @@ export function AdverseReactionForm() {
                     <h4 className="text-lg font-semibold text-cyan-100">Контактные данные заявителя</h4>
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-cyan-200 mb-2">ФИО</label>
+                            <label
+                                className="custom-required block text-sm font-medium text-cyan-200 mb-2"
+                                htmlFor="inpReporterName"
+                            >
+                                ФИО
+                            </label>
                             <input
+                                id="inpReporterName"
                                 type="text"
                                 name="reporterName"
                                 value={formData.reporterName}
@@ -138,8 +199,14 @@ export function AdverseReactionForm() {
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-cyan-200 mb-2">Телефон</label>
+                            <label
+                                className="custom-required block text-sm font-medium text-cyan-200 mb-2"
+                                htmlFor="inpReporterPhone"
+                            >
+                                Телефон
+                            </label>
                             <input
+                                id="inpReporterPhone"
                                 type="tel"
                                 name="reporterPhone"
                                 value={formData.reporterPhone}
@@ -150,8 +217,14 @@ export function AdverseReactionForm() {
                         </div>
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-cyan-200 mb-2">Email</label>
+                        <label
+                            className="custom-required block text-sm font-medium text-cyan-200 mb-2"
+                            htmlFor="inpReporterEmail"
+                        >
+                            Email
+                        </label>
                         <input
+                            id="inpReporterEmail"
                             type="email"
                             name="reporterEmail"
                             value={formData.reporterEmail}
@@ -166,39 +239,56 @@ export function AdverseReactionForm() {
                     <h4 className="text-lg font-semibold text-cyan-100">Информация о препарате</h4>
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-cyan-200 mb-2">Номер серии</label>
+                            <label
+                                className="custom-required block text-sm font-medium text-cyan-200 mb-2"
+                                htmlFor="inpBatchNumber"
+                            >
+                                Номер серии
+                            </label>
                             <input
+                                id="inpBatchNumber"
                                 type="text"
                                 name="batchNumber"
                                 value={formData.batchNumber}
                                 onChange={handleChange}
                                 className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
+                                required
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-cyan-200 mb-2">Место приобретения</label>
+                            <label
+                                className="custom-required block text-sm font-medium text-cyan-200 mb-2"
+                                htmlFor="inpPurchasePlace"
+                            >
+                                Место приобретения
+                            </label>
                             <input
+                                id="inpPurchasePlace"
                                 type="text"
                                 name="purchasePlace"
                                 value={formData.purchasePlace}
                                 onChange={handleChange}
                                 className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
+                                required
                             />
                         </div>
                     </div>
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-cyan-200 mb-2">
-                        Описание нежелательной реакции
+                    <label
+                        className="custom-required block text-sm font-medium text-cyan-200 mb-2"
+                        htmlFor="inpPurchaseDate"
+                    >
+                        Дата приобретения
                     </label>
-                    <textarea
-                        name="reactionDescription"
-                        value={formData.reactionDescription}
+                    <input
+                        id="inpPurchaseDate"
+                        type="date"
+                        name="purchaseDate"
+                        value={formData.purchaseDate}
                         onChange={handleChange}
-                        rows={4}
                         className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
-                        placeholder="Подробно опишите наблюдаемую реакцию, время появления, длительность и тяжесть симптомов"
                         required
                     />
                 </div>
@@ -207,8 +297,11 @@ export function AdverseReactionForm() {
                     <h4 className="text-lg font-semibold text-cyan-100">Применение препарата</h4>
                     <div className="grid md:grid-cols-3 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-cyan-200 mb-2">Доза</label>
+                            <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpDose">
+                                Доза
+                            </label>
                             <input
+                                id="inpDose"
                                 type="text"
                                 name="dose"
                                 value={formData.dose}
@@ -218,21 +311,30 @@ export function AdverseReactionForm() {
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-cyan-200 mb-2">Способ введения</label>
+                            <label
+                                className="block text-sm font-medium text-cyan-200 mb-2"
+                                htmlFor="inpAdministrationRoute"
+                            >
+                                Способ введения
+                            </label>
                             <select
+                                id="inpAdministrationRoute"
                                 name="administrationRoute"
                                 value={formData.administrationRoute}
                                 onChange={handleChange}
                                 className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
                             >
                                 <option value="">Выберите</option>
-                                <option value="iv">Внутривенно</option>
-                                <option value="im">Внутримышечно</option>
+                                <option value="Внутривенно">Внутривенно</option>
+                                <option value="Внутримышечно">Внутримышечно</option>
                             </select>
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-cyan-200 mb-2">Продолжительность</label>
+                            <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpDuration">
+                                Продолжительность
+                            </label>
                             <input
+                                id="inpDuration"
                                 type="text"
                                 name="duration"
                                 value={formData.duration}
@@ -248,22 +350,27 @@ export function AdverseReactionForm() {
                     <h4 className="text-lg font-semibold text-cyan-100">Сведения о животном</h4>
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-cyan-200 mb-2">Вид</label>
+                            <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpAnimalSpecies">
+                                Вид
+                            </label>
                             <select
+                                id="inpAnimalSpecies"
                                 name="animalSpecies"
                                 value={formData.animalSpecies}
                                 onChange={handleChange}
                                 className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
-                                required
                             >
                                 <option value="">Выберите</option>
-                                <option value="dog">Собака</option>
-                                <option value="cat">Кошка</option>
+                                <option value="Собака">Собака</option>
+                                <option value="Кошка">Кошка</option>
                             </select>
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-cyan-200 mb-2">Возраст</label>
+                            <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpAnimalAge">
+                                Возраст
+                            </label>
                             <input
+                                id="inpAnimalAge"
                                 type="text"
                                 name="animalAge"
                                 value={formData.animalAge}
@@ -273,8 +380,11 @@ export function AdverseReactionForm() {
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-cyan-200 mb-2">Вес</label>
+                            <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpAnimalWeight">
+                                Вес
+                            </label>
                             <input
+                                id="inpAnimalWeight"
                                 type="text"
                                 name="animalWeight"
                                 value={formData.animalWeight}
@@ -284,28 +394,32 @@ export function AdverseReactionForm() {
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-cyan-200 mb-2">Пол</label>
+                            <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpAnimalSex">
+                                Пол
+                            </label>
                             <select
+                                id="inpAnimalSex"
                                 name="animalSex"
                                 value={formData.animalSex}
                                 onChange={handleChange}
                                 className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
                             >
                                 <option value="">Выберите</option>
-                                <option value="male">Самец</option>
-                                <option value="female">Самка</option>
-                                <option value="male_castrated">Самец кастрированный</option>
-                                <option value="female_sterilized">Самка стерилизованная</option>
+                                <option value="Самец">Самец</option>
+                                <option value="Самка">Самка</option>
+                                <option value="Самец кастрированный">Самец кастрированный</option>
+                                <option value="Самка стерилизованная">Самка стерилизованная</option>
                             </select>
                         </div>
                     </div>
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-cyan-200 mb-2">
+                    <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpMedicalHistory">
                         Сопутствующие заболевания (анамнез)
                     </label>
                     <textarea
+                        id="inpMedicalHistory"
                         name="medicalHistory"
                         value={formData.medicalHistory}
                         onChange={handleChange}
@@ -316,8 +430,11 @@ export function AdverseReactionForm() {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-cyan-200 mb-2">Сопутствующая терапия</label>
+                    <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpConcomitantTherapy">
+                        Сопутствующая терапия
+                    </label>
                     <textarea
+                        id="inpConcomitantTherapy"
                         name="concomitantTherapy"
                         value={formData.concomitantTherapy}
                         onChange={handleChange}
@@ -328,17 +445,45 @@ export function AdverseReactionForm() {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-cyan-200 mb-2">
-                        Дата возникновения нежелательного последствия
+                    <label
+                        className="custom-required block text-sm font-medium text-cyan-200 mb-2"
+                        htmlFor="inpReactionDescription"
+                    >
+                        Описание нежелательной реакции
+                    </label>
+                    <textarea
+                        id="inpReactionDescription"
+                        name="reactionDescription"
+                        value={formData.reactionDescription}
+                        onChange={handleChange}
+                        rows={4}
+                        className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
+                        placeholder="Подробно опишите наблюдаемую реакцию, время появления, длительность и тяжесть симптомов"
+                        required
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpReactionDate">
+                        Дата возникновения нежелательной реакции
                     </label>
                     <input
+                        id="inpReactionDate"
                         type="date"
                         name="reactionDate"
                         value={formData.reactionDate}
                         onChange={handleChange}
                         className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
-                        required
                     />
+                </div>
+
+                <div className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white">
+                    <p className="text-blue-300 text-sm">
+                        * Отправляя сообщение, вы соглашаетесь на обработку персональных данных в соответствии с&nbsp;
+                        <a href="/privacy" target="blank" className="custom-underline">
+                            политикой конфиденциальности.
+                        </a>
+                    </p>
                 </div>
 
                 <div className="flex justify-start pt-6 border-t border-cyan-500/20">
