@@ -17,6 +17,7 @@ export function AdverseReactionForm() {
         batchNumber: '',
         purchasePlace: '',
         purchaseDate: '',
+        productionDate: '',
         dose: '',
         administrationRoute: '',
         duration: '',
@@ -28,54 +29,76 @@ export function AdverseReactionForm() {
         concomitantTherapy: '',
         reactionDescription: '',
         reactionDate: '',
+        photo: null as File | null,
+        privacyConsent: false,
     });
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
 
+        // простая проверка наличия файла
+        if (!formData.photo) {
+            toast({
+                title: 'Ошибка',
+                description: 'Пожалуйста, приложите фото упаковки',
+                variant: 'destructive',
+                duration: 2500,
+            });
+            setIsSubmitting(false);
+            return;
+        }
+
         try {
+            const fd = new FormData();
+            // Добавляем все текстовые поля
+            Object.entries(formData).forEach(([key, val]) => {
+                if (key === 'photo' || key === 'privacyConsent') return;
+                fd.append(key, (val ?? '') as string);
+            });
+            // Файл (если выбран)
+            if (formData.photo) {
+                fd.append('photo', formData.photo, formData.photo.name);
+            }
+
             const res = await fetch('/api/adverse-reaction', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
+                body: fd, // ВАЖНО: НЕ ставим Content-Type вручную
             });
 
-            if (res.ok) {
-                toast({
-                    title: 'Отчёт отправлен!',
-                    description: 'Спасибо, мы получили вашу информацию.',
-                    duration: 10000,
-                });
-                setFormData({
-                    date: '',
-                    reporterType: '',
-                    reporterName: '',
-                    reporterPhone: '',
-                    reporterEmail: '',
-                    batchNumber: '',
-                    purchasePlace: '',
-                    purchaseDate: '',
-                    dose: '',
-                    administrationRoute: '',
-                    duration: '',
-                    animalSpecies: '',
-                    animalAge: '',
-                    animalWeight: '',
-                    animalSex: '',
-                    medicalHistory: '',
-                    concomitantTherapy: '',
-                    reactionDescription: '',
-                    reactionDate: '',
-                });
-            } else {
-                throw new Error('Ошибка при отправке');
-            }
-        } catch (error) {
+            if (!res.ok) throw new Error('Ошибка при отправке');
+
+            toast({ title: 'Отчёт отправлен!', description: 'Спасибо, мы получили вашу информацию.', duration: 10000 });
+            setFormData({
+                date: '',
+                reporterType: '',
+                reporterName: '',
+                reporterPhone: '',
+                reporterEmail: '',
+                batchNumber: '',
+                purchasePlace: '',
+                purchaseDate: '',
+                productionDate: '',
+                dose: '',
+                administrationRoute: '',
+                duration: '',
+                animalSpecies: '',
+                animalAge: '',
+                animalWeight: '',
+                animalSex: '',
+                medicalHistory: '',
+                concomitantTherapy: '',
+                reactionDescription: '',
+                reactionDate: '',
+                privacyConsent: false,
+                photo: null,
+            });
+            // Если хочешь сбросить value у input[type=file], добавь ref и очисть ref.current.value = ''
+        } catch {
             toast({
                 title: 'Ошибка',
                 description: 'Не удалось отправить отчёт. Попробуйте ещё раз.',
-                duration: 2500,
+                duration: 4000,
                 variant: 'destructive',
             });
         } finally {
@@ -84,10 +107,29 @@ export function AdverseReactionForm() {
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
+        const { name, value, type } = e.target;
+
+        if (type === 'checkbox') {
+            const checked = (e.target as HTMLInputElement).checked;
+            setFormData((prev) => ({ ...prev, [name]: checked }));
+        } else if (type === 'file') {
+            const file = (e.target as HTMLInputElement).files?.[0] || null;
+            // Проверка размера (8 МБ)
+            if (file && file.size > 8 * 1024 * 1024) {
+                toast({
+                    title: 'Ошибка',
+                    description: 'Размер файла превышает 8 МБ',
+                    duration: 2500,
+                    variant: 'destructive',
+                });
+                (e.target as HTMLInputElement).value = '';
+                setFormData((prev) => ({ ...prev, photo: null }));
+                return;
+            }
+            setFormData((prev) => ({ ...prev, [name]: file }));
+        } else {
+            setFormData((prev) => ({ ...prev, [name]: value }));
+        }
     };
 
     return (
@@ -95,8 +137,8 @@ export function AdverseReactionForm() {
             <form
                 onSubmit={handleSubmit}
                 onInvalid={(e) => {
-                    const native = e.nativeEvent as InputEvent & { stopImmediatePropagation?: () => void };
-                    native.stopImmediatePropagation?.(); // блокируем остальные onInvalid
+                    const native = e.nativeEvent as Event & { stopImmediatePropagation?: () => void };
+                    native.stopImmediatePropagation?.();
 
                     const invalidElements = Array.from(
                         (e.currentTarget as HTMLFormElement).querySelectorAll(
@@ -157,10 +199,7 @@ export function AdverseReactionForm() {
                     </div>
 
                     <div>
-                        <label
-                            className="custom-required block text-sm font-medium text-cyan-200 mb-2"
-                            htmlFor="inpReporterType"
-                        >
+                        <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpReporterType">
                             Кто сообщает
                         </label>
                         <select
@@ -169,7 +208,6 @@ export function AdverseReactionForm() {
                             value={formData.reporterType}
                             onChange={handleChange}
                             className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
-                            required
                         >
                             <option value="">Выберите</option>
                             <option value="Ветеринарный врач">Ветеринарный врач</option>
@@ -182,10 +220,7 @@ export function AdverseReactionForm() {
                     <h4 className="text-lg font-semibold text-cyan-100">Контактные данные заявителя</h4>
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                            <label
-                                className="custom-required block text-sm font-medium text-cyan-200 mb-2"
-                                htmlFor="inpReporterName"
-                            >
+                            <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpReporterName">
                                 ФИО
                             </label>
                             <input
@@ -199,10 +234,7 @@ export function AdverseReactionForm() {
                             />
                         </div>
                         <div>
-                            <label
-                                className="custom-required block text-sm font-medium text-cyan-200 mb-2"
-                                htmlFor="inpReporterPhone"
-                            >
+                            <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpReporterPhone">
                                 Телефон
                             </label>
                             <input
@@ -217,10 +249,7 @@ export function AdverseReactionForm() {
                         </div>
                     </div>
                     <div>
-                        <label
-                            className="custom-required block text-sm font-medium text-cyan-200 mb-2"
-                            htmlFor="inpReporterEmail"
-                        >
+                        <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpReporterEmail">
                             Email
                         </label>
                         <input
@@ -239,10 +268,7 @@ export function AdverseReactionForm() {
                     <h4 className="text-lg font-semibold text-cyan-100">Информация о препарате</h4>
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                            <label
-                                className="custom-required block text-sm font-medium text-cyan-200 mb-2"
-                                htmlFor="inpBatchNumber"
-                            >
+                            <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpBatchNumber">
                                 Номер серии
                             </label>
                             <input
@@ -256,10 +282,7 @@ export function AdverseReactionForm() {
                             />
                         </div>
                         <div>
-                            <label
-                                className="custom-required block text-sm font-medium text-cyan-200 mb-2"
-                                htmlFor="inpPurchasePlace"
-                            >
+                            <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpPurchasePlace">
                                 Место приобретения
                             </label>
                             <input
@@ -273,24 +296,36 @@ export function AdverseReactionForm() {
                             />
                         </div>
                     </div>
-                </div>
+                    <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpPurchaseDate">
+                                Дата приобретения
+                            </label>
+                            <input
+                                id="inpPurchaseDate"
+                                type="date"
+                                name="purchaseDate"
+                                value={formData.purchaseDate}
+                                onChange={handleChange}
+                                className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
+                                required
+                            />
+                        </div>
 
-                <div>
-                    <label
-                        className="custom-required block text-sm font-medium text-cyan-200 mb-2"
-                        htmlFor="inpPurchaseDate"
-                    >
-                        Дата приобретения
-                    </label>
-                    <input
-                        id="inpPurchaseDate"
-                        type="date"
-                        name="purchaseDate"
-                        value={formData.purchaseDate}
-                        onChange={handleChange}
-                        className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
-                        required
-                    />
+                        <div>
+                            <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpProductionDate">
+                                Дата изготовления
+                            </label>
+                            <input
+                                id="inpProductionDate"
+                                type="date"
+                                name="productionDate"
+                                value={formData.productionDate}
+                                onChange={handleChange}
+                                className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
+                            />
+                        </div>
+                    </div>
                 </div>
 
                 <div className="space-y-4">
@@ -445,10 +480,7 @@ export function AdverseReactionForm() {
                 </div>
 
                 <div>
-                    <label
-                        className="custom-required block text-sm font-medium text-cyan-200 mb-2"
-                        htmlFor="inpReactionDescription"
-                    >
+                    <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpReactionDescription">
                         Описание нежелательной реакции
                     </label>
                     <textarea
@@ -477,13 +509,52 @@ export function AdverseReactionForm() {
                     />
                 </div>
 
-                <div className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white">
-                    <p className="text-blue-300 text-sm">
-                        * Отправляя сообщение, вы соглашаетесь на обработку персональных данных в соответствии с&nbsp;
-                        <a href="/privacy" target="blank" className="custom-underline">
-                            политикой конфиденциальности.
-                        </a>
-                    </p>
+                <div className="space-y-2">
+                    <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpPhoto">
+                        Фото упаковки
+                    </label>
+
+                    <input
+                        id="inpPhoto"
+                        type="file"
+                        name="photo"
+                        accept="image/*"
+                        onChange={handleChange}
+                        className="hidden"
+                    />
+
+                    <label
+                        htmlFor="inpPhoto"
+                        className="flex items-center justify-center px-4 py-3 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white cursor-pointer hover:border-blue-400 transition"
+                    >
+                        Загрузить файл
+                    </label>
+
+                    {formData.photo && (
+                        <p className="text-sm text-gray-400">
+                            Выбран: {formData.photo.name} {(formData.photo.size / (1024 * 1024)).toFixed(2)} МБ
+                        </p>
+                    )}
+                </div>
+
+                <div className="mt-6 p-4 bg-blue-900/30 border border-cyan-500/30 rounded-lg">
+                    <label className="flex items-start justify-start space-x-2 text-blue-300 text-sm">
+                        <input
+                            type="checkbox"
+                            name="privacyConsent"
+                            checked={formData.privacyConsent}
+                            onChange={handleChange}
+                            className="custom-checkbox mt-1 mr-1 rounded border-blue-600/50 bg-slate-800/50 text-blue-500 focus:ring-blue-400 focus:ring-offset-0"
+                            required
+                        />
+                        <span>
+                            Я соглашаюсь на обработку персональных данных в соответствии с&nbsp;
+                            <a href="/privacy" target="_blank" className="custom-underline">
+                                политикой конфиденциальности
+                            </a>
+                            .
+                        </span>
+                    </label>
                 </div>
 
                 <div className="flex justify-start pt-6 border-t border-cyan-500/20">

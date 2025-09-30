@@ -281,31 +281,44 @@ div::-webkit-scrollbar-thumb:active {
     background-color: #338bf1;
 }
 
-#contact input {
-    height: 44px;
+#contact input,
+#contact select {
+    height: 48px;
 }
 
+#contact select {
+    transition: all 0.2s ease;
+}
+#contact select:hover {
+    background-color: #233042;
+}
+#contact select option {
+    background-color: #233042;
+    color: #ffffff;
+}
+
+.custom-height-44,
 #custom-id-adverse-reaction-form input,
-#custom-id-adverse-reaction-form select{
+#custom-id-adverse-reaction-form select {
     height: 44px;
 }
 
-
-#contact input:focus-visible,
-#contact select:focus-visible,
-#custom-id-adverse-reaction-form input:focus-visible,
-#custom-id-adverse-reaction-form select:focus-visible{
-    box-shadow: none;
+.custom-box-shadow-none,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    box-shadow: none !important;
 }
 
 @media (max-width: 767px) {
-    #custom-id-adverse-reaction-form input,
-    #custom-id-adverse-reaction-form select{
-    width: 100%;
+    input,
+    select,
+    textarea {
+        width: 100% !important;
     }
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator {
+input[type='date']::-webkit-calendar-picker-indicator {
     filter: invert(1);
     cursor: pointer;
 }
@@ -314,9 +327,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     right: 3.5rem;
 }
 select {
-    appearance: none; 
+    appearance: none;
 }
-.custom-required::after { 
+.custom-required::after {
     content: ' *';
 }
-
+.custom-checkbox {
+    height: fit-content !important;
+    width: fit-content !important;
+}

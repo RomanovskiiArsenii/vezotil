@@ -18,23 +18,15 @@ export default function ContactSection() {
     const { toast } = useToast();
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // const [formData, setFormData] = useState({
-    //     name: '',
-    //     email: '',
-    //     phone: '',
-    //     message: '',
-    // });
-
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         phone: '',
         topic: '',
+        company: '',
+        questionTopic: '',
         message: '',
-        batchNumber: '',
-        purchaseDate: '',
-        purchasePlace: '',
-        photo: null as File | null,
+        privacyConsent: false,
     });
 
     const contactInfo = [
@@ -74,71 +66,33 @@ export default function ContactSection() {
     // };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const { name, value, files } = e.target as HTMLInputElement;
-        setFormData({
-            ...formData,
-            [name]: files ? files[0] : value,
-        });
+        const { name, value, type } = e.target;
+
+        if (type === 'checkbox') {
+            setFormData({
+                ...formData,
+                [name]: (e.target as HTMLInputElement).checked,
+            });
+        } else {
+            setFormData({
+                ...formData,
+                [name]: value,
+            });
+        }
     };
-
-    // const handleSubmit = async (e: React.FormEvent) => {
-    //     e.preventDefault();
-    //     setIsSubmitting(true);
-
-    //     try {
-    //         const res = await fetch('/api/contact', {
-    //             method: 'POST',
-    //             headers: { 'Content-Type': 'application/json' },
-    //             body: JSON.stringify(formData),
-    //         });
-
-    //         if (res.ok) {
-    //             toast({
-    //                 title: 'Заявка отправлена!',
-    //                 description: 'Мы свяжемся с вами в ближайшее время.',
-    //                 duration: 10000,
-    //             });
-    //             setFormData({ name: '', email: '', phone: '', message: '' });
-    //         } else {
-    //             throw new Error('Ошибка при отправке');
-    //         }
-    //     } catch (error) {
-    //         toast({
-    //             title: 'Ошибка',
-    //             description: 'Не удалось отправить заявку. Попробуйте ещё раз.',
-    //             variant: 'destructive',
-    //         });
-    //     } finally {
-    //         setIsSubmitting(false);
-    //     }
-    // };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
 
         try {
-            // Проверка только для темы "Нежелательная реакция"
-            if (formData.topic === 'Нежелательная реакция' && !formData.photo) {
-                toast({
-                    title: 'Ошибка',
-                    description: 'Необходимо прикрепить фото упаковки',
-                    variant: 'destructive',
-                    duration: 2500,
-                });
-                setIsSubmitting(false);
-                return;
+            const { privacyConsent, ...dataToSend } = formData; // <- выкинули флаг
+            const formDataToSend = new FormData();
+            for (const [key, raw] of Object.entries(dataToSend)) {
+                formDataToSend.append(key, raw ?? '');
             }
 
-            const formDataToSend = new FormData();
-            Object.entries(formData).forEach(([key, value]) => {
-                if (value) formDataToSend.append(key, value as any);
-            });
-
-            const res = await fetch('/api/contact', {
-                method: 'POST',
-                body: formDataToSend,
-            });
+            const res = await fetch('/api/contact', { method: 'POST', body: formDataToSend });
 
             if (res.ok) {
                 toast({
@@ -151,21 +105,19 @@ export default function ContactSection() {
                     email: '',
                     phone: '',
                     topic: '',
+                    company: '',
+                    questionTopic: '',
                     message: '',
-                    batchNumber: '',
-                    purchaseDate: '',
-                    purchasePlace: '',
-                    photo: null,
+                    privacyConsent: false, // только для UI формы
                 });
             } else {
                 throw new Error('Ошибка при отправке');
             }
-        } catch (error) {
+        } catch {
             toast({
                 title: 'Ошибка',
                 description: 'Не удалось отправить заявку. Попробуйте ещё раз.',
                 variant: 'destructive',
-                duration: 2500,
             });
         } finally {
             setIsSubmitting(false);
@@ -253,7 +205,7 @@ export default function ContactSection() {
                         initial={{ opacity: 0, x: 50 }}
                         animate={inView ? { opacity: 1, x: 0 } : {}}
                         transition={{ duration: 0.8, delay: 0.4 }}
-                        className="hud-element p-8 rounded-lg"
+                        className="hud-element p-6 rounded-lg"
                     >
                         <h3 className="text-2xl font-bold hud-text mb-6">Отправить заявку</h3>
                         <form
@@ -302,7 +254,7 @@ export default function ContactSection() {
                                     }
                                 }
                             }}
-                            className="space-y-6 p-2"
+                            className="space-y-6"
                         >
                             <div className="space-y-2">
                                 <label className="custom-required text-gray-300 text-sm" htmlFor="inpContactName">
@@ -317,7 +269,7 @@ export default function ContactSection() {
                                         value={formData?.name}
                                         onChange={handleInputChange}
                                         className="pl-12 bg-slate-800/50 border-slate-600 text-white focus:border-blue-400"
-                                        placeholder="Ваше имя"
+                                        placeholder="Ваше ФИО"
                                         required
                                     />
                                 </div>
@@ -355,32 +307,14 @@ export default function ContactSection() {
                                         value={formData?.phone}
                                         onChange={handleInputChange}
                                         className="pl-12 bg-slate-800/50 border-slate-600 text-white focus:border-blue-400"
-                                        placeholder="+7 (000) 000-00-00"
+                                        placeholder="+7 000 000 00 00"
                                         required
                                     />
                                 </div>
                             </div>
 
                             <div className="space-y-2">
-                                <label className="custom-required text-gray-300 text-sm" htmlFor="inpContactMessage">
-                                    Сообщение
-                                </label>
-                                <div className="relative">
-                                    <MessageSquare className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
-                                    <Textarea
-                                        id="inpContactMessage"
-                                        name="message"
-                                        value={formData?.message}
-                                        onChange={handleInputChange}
-                                        className="pl-12 bg-slate-800/50 border-slate-600 text-white focus:border-blue-400 min-h-[120px]"
-                                        placeholder="Опишите ваши потребности, количество препарата и любые вопросы..."
-                                        required
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-gray-300 text-sm" htmlFor="inpContactTopic">
+                                <label className="custom-required text-gray-300 text-sm" htmlFor="inpContactTopic">
                                     Тема
                                 </label>
                                 <select
@@ -388,112 +322,116 @@ export default function ContactSection() {
                                     name="topic"
                                     value={formData.topic}
                                     onChange={handleInputChange}
-                                    className="custom-select w-full pl-4 px-2 py-3 rounded-lg bg-slate-800/50 border border-slate-600 text-white focus:border-blue-400 focus:outline-none"
+                                    className="w-full pl-4 px-2 py-3 rounded-lg bg-slate-800/50 border border-slate-600 text-white focus:border-blue-400 focus:outline-none"
                                     required
                                 >
-                                    <option value="">Выберите тему</option>
-                                    <option value="Вопрос">Задать вопрос</option>
-                                    <option value="Консультация">Получить консультацию по применению</option>
-                                    <option value="Нежелательная реакция">Сообщить о нежелательной реакции</option>
+                                    <option value="" disabled>
+                                        Выберите из списка
+                                    </option>
+                                    <option value="Где купить">Где купить?</option>
+                                    <option value="Задать вопрос">Задать вопрос</option>
                                 </select>
                             </div>
 
-                            {formData.topic === 'Нежелательная реакция' && (
+                            {formData.topic === 'Задать вопрос' && (
                                 <div className="space-y-6">
                                     <div className="space-y-2">
                                         <label
                                             className="custom-required text-gray-300 text-sm"
-                                            htmlFor="inpBatchNumber"
+                                            htmlFor="inpContactQuestionTopic"
                                         >
-                                            Номер серии
+                                            Категория вопроса
                                         </label>
-                                        <Input
-                                            id="inpBatchNumber"
-                                            type="text"
-                                            name="batchNumber"
-                                            value={formData.batchNumber}
+                                        <select
+                                            id="inpContactQuestionTopic"
+                                            name="questionTopic"
+                                            value={formData.questionTopic}
                                             onChange={handleInputChange}
-                                            className="bg-slate-800/50 border-slate-600 text-white focus:border-blue-400"
+                                            className="w-full pl-4 px-2 py-3 rounded-lg bg-slate-800/50 border border-slate-600 text-white focus:border-blue-400 focus:outline-none"
                                             required
-                                        />
+                                        >
+                                            <option value="" disabled>
+                                                Выберите из списка
+                                            </option>
+                                            <option value="Вопрос анестезиологу">Вопрос анестезиологу</option>
+                                            <option value="Вопрос по сотрудничеству">Вопрос по сотрудничеству</option>
+                                        </select>
                                     </div>
+
                                     <div className="space-y-2">
                                         <label
                                             className="custom-required text-gray-300 text-sm"
-                                            htmlFor="inpPurchaseDate"
+                                            htmlFor="inpContactCompany"
                                         >
-                                            Дата покупки
+                                            Название компании
                                         </label>
-                                        <Input
-                                            id="inpPurchaseDate"
-                                            type="date"
-                                            name="purchaseDate"
-                                            value={formData.purchaseDate}
-                                            onChange={handleInputChange}
-                                            className="custom-datepicker w-full bg-slate-800/50 border-slate-600 text-white focus:border-blue-400"
-                                            required
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label
-                                            className="custom-required text-gray-300 text-sm"
-                                            htmlFor="inpPurchasePlace"
-                                        >
-                                            Место покупки
-                                        </label>
-                                        <Input
-                                            id="inpPurchasePlace"
-                                            type="text"
-                                            name="purchasePlace"
-                                            value={formData.purchasePlace}
-                                            onChange={handleInputChange}
-                                            className="bg-slate-800/50 border-slate-600 text-white focus:border-blue-400"
-                                            required
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label className="custom-required text-gray-300 text-sm" htmlFor="inpPhoto">
-                                            Фото упаковки
-                                        </label>
-
-                                        <input
-                                            id="inpPhoto"
-                                            type="file"
-                                            name="photo"
-                                            accept="image/*"
-                                            onChange={(e) => {
-                                                const file = e.target.files?.[0];
-                                                if (file) {
-                                                    if (file.size > 8 * 1024 * 1024) {
-                                                        toast({
-                                                            title: 'Ошибка',
-                                                            description: 'Размер файла превышает 8 МБ',
-                                                            duration: 2500,
-                                                            variant: 'destructive',
-                                                        });
-                                                        e.target.value = '';
-                                                        setFormData({ ...formData, photo: null });
-                                                    } else {
-                                                        setFormData({ ...formData, photo: file });
-                                                    }
-                                                }
-                                            }}
-                                            className="hidden"
-                                        />
-
-                                        <label
-                                            htmlFor="inpPhoto"
-                                            className="flex items-center justify-center px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-lg text-white cursor-pointer hover:border-blue-400 transition"
-                                        >
-                                            Загрузить файл
-                                        </label>
-
-                                        {formData.photo && (
-                                            <p className="text-sm text-gray-400">Выбран: {formData.photo.name}</p>
-                                        )}
+                                        <div className="relative">
+                                            <User className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                                            <Input
+                                                id="inpContactCompany"
+                                                type="text"
+                                                name="company"
+                                                value={formData?.company}
+                                                onChange={handleInputChange}
+                                                className="pl-12 bg-slate-800/50 border-slate-600 text-white focus:border-blue-400"
+                                                placeholder="Название вашей компании"
+                                                required
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             )}
+
+                            {formData.topic !== '' && (
+                                <div className="space-y-6">
+                                    <div className="space-y-2">
+                                        <label
+                                            className="custom-required text-gray-300 text-sm"
+                                            htmlFor="inpContactMessage"
+                                        >
+                                            Сообщение
+                                        </label>
+                                        <div className="relative">
+                                            <MessageSquare className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                                            <Textarea
+                                                id="inpContactMessage"
+                                                name="message"
+                                                value={formData?.message}
+                                                onChange={handleInputChange}
+                                                className="custom-box-shadow-none pl-12 bg-slate-800/50 border-slate-600 text-white focus:border-blue-400 min-h-[120px]"
+                                                placeholder={
+                                                    formData.topic === 'Где купить'
+                                                        ? 'Укажите интересующее вас количество для закупки'
+                                                        : formData.topic === 'Задать вопрос'
+                                                        ? 'Задайте ваш вопрос'
+                                                        : ''
+                                                }
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="mt-6 p-4 bg-blue-900/20 border border-blue-600/30 rounded-lg">
+                                <label className="flex items-start justify-start space-x-2 text-blue-300 text-sm">
+                                    <input
+                                        type="checkbox"
+                                        name="privacyConsent"
+                                        checked={formData.privacyConsent}
+                                        onChange={handleInputChange}
+                                        required
+                                        className="custom-checkbox mt-1 mr-1 rounded border-blue-600/50 bg-slate-800/50 text-blue-500 focus:ring-blue-400 focus:ring-offset-0"
+                                    />
+                                    <span>
+                                        Я соглашаюсь на обработку персональных данных в соответствии с&nbsp;
+                                        <a href="/privacy" target="_blank" className="custom-underline">
+                                            политикой конфиденциальности
+                                        </a>
+                                        .
+                                    </span>
+                                </label>
+                            </div>
 
                             <button
                                 type="submit"
@@ -522,16 +460,6 @@ export default function ContactSection() {
                                 />
                             </button>
                         </form>
-
-                        <div className="mt-6 p-4 bg-blue-900/20 border border-blue-600/30 rounded-lg">
-                            <p className="text-blue-300 text-sm">
-                                * Отправляя заявку, вы соглашаетесь на обработку персональных данных в соответствии
-                                с&nbsp;
-                                <a href="/privacy" target="blank" className="custom-underline">
-                                    политикой конфиденциальности.
-                                </a>
-                            </p>
-                        </div>
                     </motion.div>
                 </div>
 
@@ -542,7 +470,7 @@ export default function ContactSection() {
                     transition={{ duration: 0.8, delay: 0.8 }}
                     className="mt-16 text-center"
                 >
-                    <div className="hud-element p-8 rounded-lg">
+                    <div className="hud-element p-6 rounded-lg">
                         <h3 className="text-xl font-bold text-white mb-8">Дополнительная информация</h3>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-300">
                             <div>
