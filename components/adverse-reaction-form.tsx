@@ -21,6 +21,7 @@ export function AdverseReactionForm() {
         dose: '',
         administrationRoute: '',
         duration: '',
+        manipulationPlace: '',
         animalSpecies: '',
         animalAge: '',
         animalWeight: '',
@@ -82,6 +83,7 @@ export function AdverseReactionForm() {
                 dose: '',
                 administrationRoute: '',
                 duration: '',
+                manipulationPlace: '',
                 animalSpecies: '',
                 animalAge: '',
                 animalWeight: '',
@@ -330,7 +332,7 @@ export function AdverseReactionForm() {
 
                 <div className="space-y-4">
                     <h4 className="text-lg font-semibold text-cyan-100">Применение препарата</h4>
-                    <div className="grid md:grid-cols-3 gap-4">
+                    <div className="grid md:grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpDose">
                                 Доза
@@ -364,6 +366,8 @@ export function AdverseReactionForm() {
                                 <option value="Внутримышечно">Внутримышечно</option>
                             </select>
                         </div>
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpDuration">
                                 Продолжительность
@@ -377,6 +381,26 @@ export function AdverseReactionForm() {
                                 className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
                                 placeholder="мин/часов"
                             />
+                        </div>
+
+                        <div>
+                            <label
+                                className="block text-sm font-medium text-cyan-200 mb-2"
+                                htmlFor="inpManipulationPlace"
+                            >
+                                Место проведения манипуляции
+                            </label>
+                            <select
+                                id="inpManipulationPlace"
+                                name="manipulationPlace"
+                                value={formData.manipulationPlace}
+                                onChange={handleChange}
+                                className="w-full px-3 py-2 bg-blue-900/30 border border-cyan-500/30 rounded-lg text-white focus:border-cyan-400 focus:outline-none"
+                            >
+                                <option value="">Выберите</option>
+                                <option value="Врач частной практики">Врач частной практики</option>
+                                <option value="Ветеринарная клиника">Ветеринарная клиника</option>
+                            </select>
                         </div>
                     </div>
                 </div>

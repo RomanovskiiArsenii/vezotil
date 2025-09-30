@@ -26,6 +26,7 @@ export async function POST(req: Request) {
         const dose = get('dose');
         const administrationRoute = get('administrationRoute');
         const duration = get('duration');
+        const manipulationPlace = get('manipulationPlace');
 
         const animalSpecies = get('animalSpecies');
         const animalAge = get('animalAge');
@@ -63,6 +64,7 @@ export async function POST(req: Request) {
       <p style="color:#000 !important"><b>Доза:</b> ${esc(dose)}</p>
       <p style="color:#000 !important"><b>Способ введения:</b> ${esc(administrationRoute)}</p>
       <p style="color:#000 !important"><b>Продолжительность:</b> ${esc(duration)}</p>
+      <p style="color:#000 !important"><b>Место проведения манипуляции:</b> ${esc(manipulationPlace)}</p>
 
       <br>
       <h3 style="color:#000 !important">Сведения о животном</h3>
