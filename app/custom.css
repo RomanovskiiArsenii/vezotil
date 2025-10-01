@@ -316,6 +316,9 @@ textarea:focus-visible {
     textarea {
         width: 100% !important;
     }
+    input[type='date'] {
+        width: calc(100vw - 2rem) !important;
+    }
 }
 
 input[type='date']::-webkit-calendar-picker-indicator {
@@ -333,6 +336,8 @@ select {
     content: ' *';
 }
 .custom-checkbox {
-    height: fit-content !important;
-    width: fit-content !important;
+    height: 13px !important;
+    width: 13px !important;
+    flex-shrink: 0;
+    flex-grow: 0;
 }
