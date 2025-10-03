@@ -222,7 +222,10 @@ export function AdverseReactionForm() {
                     <h4 className="text-lg font-semibold text-cyan-100">Контактные данные заявителя</h4>
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpReporterName">
+                            <label
+                                className="custom-required block text-sm font-medium text-cyan-200 mb-2"
+                                htmlFor="inpReporterName"
+                            >
                                 ФИО
                             </label>
                             <input
@@ -236,7 +239,10 @@ export function AdverseReactionForm() {
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpReporterPhone">
+                            <label
+                                className="custom-required block text-sm font-medium text-cyan-200 mb-2"
+                                htmlFor="inpReporterPhone"
+                            >
                                 Телефон
                             </label>
                             <input
@@ -251,7 +257,10 @@ export function AdverseReactionForm() {
                         </div>
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpReporterEmail">
+                        <label
+                            className="custom-required block text-sm font-medium text-cyan-200 mb-2"
+                            htmlFor="inpReporterEmail"
+                        >
                             Email
                         </label>
                         <input
@@ -270,7 +279,10 @@ export function AdverseReactionForm() {
                     <h4 className="text-lg font-semibold text-cyan-100">Информация о препарате</h4>
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpBatchNumber">
+                            <label
+                                className="custom-required block text-sm font-medium text-cyan-200 mb-2"
+                                htmlFor="inpBatchNumber"
+                            >
                                 Номер серии
                             </label>
                             <input
@@ -284,7 +296,10 @@ export function AdverseReactionForm() {
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpPurchasePlace">
+                            <label
+                                className="custom-required block text-sm font-medium text-cyan-200 mb-2"
+                                htmlFor="inpPurchasePlace"
+                            >
                                 Место приобретения
                             </label>
                             <input
@@ -300,7 +315,10 @@ export function AdverseReactionForm() {
                     </div>
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpPurchaseDate">
+                            <label
+                                className="custom-required block text-sm font-medium text-cyan-200 mb-2"
+                                htmlFor="inpPurchaseDate"
+                            >
                                 Дата приобретения
                             </label>
                             <input
@@ -504,7 +522,10 @@ export function AdverseReactionForm() {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpReactionDescription">
+                    <label
+                        className="custom-required block text-sm font-medium text-cyan-200 mb-2"
+                        htmlFor="inpReactionDescription"
+                    >
                         Описание нежелательной реакции
                     </label>
                     <textarea
@@ -534,7 +555,7 @@ export function AdverseReactionForm() {
                 </div>
 
                 <div className="space-y-2">
-                    <label className="block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpPhoto">
+                    <label className="custom-required block text-sm font-medium text-cyan-200 mb-2" htmlFor="inpPhoto">
                         Фото упаковки
                     </label>
 
